@@ -2,15 +2,25 @@
 <html>
 <head>
 <title></title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="bootstrap-5.0.2-dist/css/bootstrap.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+    <style>
+        .error{
+            color: blue;
+            font-style: italic;
+        }
+    </style>
 </head>
 <body>
+    <script src="bootstrap-5.0.2-dist/js/bootstrap.js"></script>
 <nav>
-    <ul>
-        <li><a href="index.php">HOME</a></li>
-        <li><a href="register.php">REGISTER</a></li>
+    <ul class="list-inline" style="float:right">
+        <li class="list-inline-item"><a class="btn btn-link" href="index.php">HOME</a></li>
+        <li class="list-inline-item"><a class="btn btn-link" href="register.php">REGISTER</a></li>
     </ul>
 </nav>
 <?php 
@@ -46,20 +56,28 @@
         }
     }
 ?>
-<h1>LOG IN</h1>
-<p>No account?<a href="register.php">REGISTER HERE!</a></p>
-<form id="loginform" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"  method="post">
-<label for="email">Email id:</label>
-<input type="text" id="email" name="email" placeholder="enter email id" value="<?php echo $email;?>">
-<span class="error"><?php if(isset($emailErr)) {echo $emailErr;}?></span>
-<br><br>
-<label for="password">Password:</label>
-<input type="password" id="password" name="password" placeholder="enter password" value="<?php echo $password;?>">
-<span class="error"><?php if(isset($passErr)) {echo $passErr;}?></span>
-<br><br>
-<button type="submit" name="submit" value="submit">LOGIN</button>
-<p>forgot password?<a href="forgotpassword.php">click here!</a></p>
-</form>
+<h4 class="text-center" style="padding-top: 100px;color: blue">LOG IN</h4>
+<p class="text-center" style="padding-top: 10px">No account?<a class="btn btn-link" href="register.php">REGISTER HERE!</a></p>
+<div class="container" style="padding: 10px 20px 20px 220px; margin-right: 100px;margin-left: 280px">
+    <form id="loginform" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"  method="post">
+        <div class="row mb-3">
+            <label for="email" class="form-label col-sm-2">Email id:</label>
+            <div class="col-sm-4">
+                <input class="form-control" type="text" id="email" name="email" placeholder="enter email id" value="<?php echo $email;?>">
+                <span class="error"><?php if(isset($emailErr)) {echo $emailErr;}?></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="password" class="form-label col-sm-2">Password:</label>
+            <div class="col-sm-4">
+                <input class="form-control" type="password" id="password" name="password" placeholder="enter password" value="<?php echo $password;?>">
+                <span class="error"><?php if(isset($passErr)) {echo $passErr;}?></span>
+            </div>
+        </div>
+        <button class="btn btn-primary" style="margin-bottom: 30px" type="submit" name="submit" value="submit">LOGIN</button>
+        <p>forgot password?<a class="btn btn-link" href="forgotpassword.php">click here!</a></p>
+    </form>
+</div>
 </body>
 <script type="text/javascript">
 $(" #loginform ").validate({

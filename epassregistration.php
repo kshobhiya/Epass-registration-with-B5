@@ -2,89 +2,145 @@
 <html>
 <head>
 <title></title>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="bootstrap-5.0.2-dist/css/bootstrap.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+    <style>
+        .error{
+            color: blue;
+            font-style: italic;
+        }
+    </style>
 </head>
 <body>
-<h1>EPASS REGISTRATION FORM</h1>
+    <script src="bootstrap-5.0.2-dist/js/bootstrap.js"></script>
+<h4 class="text-center" style="color: blue">EPASS REGISTRATION FORM</h4>
 <?php 
     include "epassregistrationvalidation.php";
 ?>
-<form id="epassform" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"    method="POST" enctype="multipart/form-data"> 
-<label for="firstname">Firstname:</label> <input type="text" name="firstname" value="<?php echo $fname;?>">
-<span class="error"><?php if(isset($fnameErr)) {echo $fnameErr;}?></span>
-<br><br>
-<label for="lastname">Lastname:</label> <input type="text" name="lastname" value="<?php echo $lname;?>">
-<span class="error"><?php if(isset($lnameErr)) {echo $lnameErr;}?></span>
-<br><br>
-<label for="email">Email:</label> <input type="text" name="email" value="<?php echo $email;?>"> 
-<span class="error"><?php if(isset($emailErr)) {echo $emailErr;}?></span>
-<br><br>
-<label for="mobilenum">MobileNumber:</label> <input type="text" name="mobilenum" value="<?php echo $mobilenum;?>">
-<span class="error"><?php if(isset($mobilenumErr)) {echo $mobilenumErr;}?></span> 
-<br><br>
-<div id="reason">
-<label for="reason">Select Reason:</label>
-<input type="radio" name="reason" 
-<?php if(isset($reason) && $reason=="marriage"){echo "checked";}?> value="marriage" required>Marriage
-<input type="radio" name="reason"
-<?php if(isset($reason) && $reason=="medical emergency"){echo "checked";}?> value="medical emergency" required>Medical Emergency
-<span class="error"><?php if(isset($reasonErr)) {echo $reasonErr;}?></span>
-</div><br>
-<label><b>From place of travel:</b></label><br><br>
-<label for="district">Select District:</label>
-<select name="district" id="district" value="<?php echo $district;?>">
-    <option value="0">--Select District--</option>
-    <?php
-        $conn = mysqli_connect("localhost","root","","form epass");
-        $sql="SELECT * FROM `district`";
-        $result=mysqli_query($conn,$sql);
-        while($row=mysqli_fetch_array($result)){
-            echo "<option value=".$row["District_id"].">".$row["District"]."</option>";
-        }
-    ?>
-
-</select>
-<span class="error"><?php if(isset($districtErr)){echo $districtErr;}?></span>
-<label for="city">Select City:</label>
-<select name="city" id="city" value="<?php echo $city;?>">
-    <option value="0">--Select city--</option>
-</select>
-<span class="error"><?php if(isset($cityErr)){echo $cityErr;}?></span><br><br>
-<label><b>Destination place:</b></label><br><br>
-<label for="destinationdistrict">Select District:</label>
-<select name="destinationdistrict" id="destinationdistrict" value="<?php echo $ddistrict; ?>">
-    <option value="0">--Select District--</option>
-    <?php
-        $conn = mysqli_connect("localhost","root","","form epass");
-        $sql="SELECT * FROM `district`";
-        $result=mysqli_query($conn,$sql);
-        while($row=mysqli_fetch_array($result)){
-            echo "<option value=".$row["District_id"].">".$row["District"]."</option>";
-        }
-    ?>
-</select>
-<span class="error"><?php if(isset($ddistrictErr)){echo $ddistrictErr;}?></span>
-<label for="destinationcity">Select City:</label>
-<select name="destinationcity" id="destinationcity" value="<?php echo $dcity;?>">
-    <option>--Select City--</option>
-</select><br><br>
-<span class="error"><?php if(isset($dcityErr)){echo $dcityErr;}?></span>
-<label for="date">Date:</label>
-<input type="text" id="date" name="date" placeholder="MM/DD/YYYY" value="<?php echo $date;?>"> 
-<span class="error"><?php if(isset($dateErr)){echo $dateErr;}?></span>
-<br><br>
-<label for="vehicle">Vehicle number:</label> <input type="text" name="vehicle" value="<?php echo $vehicle;?>"> 
-<span class="error"><?php if(isset($vehicleErr)) {echo $vehicleErr;}?></span>
-<br><br>
-<label for="file">Upload document:</label> <input type="file" name="file" value="<?php echo $destination;?>">
-<span class="error"><?php if(isset($fileError)){echo $fileError;}?></span>
-<span class="error"><?php if(isset($fileErr)){echo $fileErr;}?></span><br>
+<div class="container" style="padding: 30px 0px 30px 0px">
+    <form id="epassform" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"    method="POST" enctype="multipart/form-data">
+    <div class="row mb-3">
+        <label for="firstname" class="col-sm-2 form-label"><b>Firstname:</b></label>
+        <div class="col-sm-4">
+            <input class="form-control" type="text" name="firstname" value="<?php echo $fname;?>">
+            <span class="error"><?php if(isset($fnameErr)) {echo $fnameErr;}?></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="lastname" class="col-sm-2 form-label"><b>Lastname:</b></label>
+        <div class="col-sm-4">
+            <input class="form-control" type="text" name="lastname" value="<?php echo $lname;?>">
+            <span class="error"><?php if(isset($lnameErr)) {echo $lnameErr;}?></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="email" class="col-sm-2 form-label"><b>Email:</b></label>
+        <div class="col-sm-4">
+            <input class="form-control" type="text" name="email" value="<?php echo $email;?>"> 
+            <span class="error"><?php if(isset($emailErr)) {echo $emailErr;}?></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="mobilenum" class="col-sm-2 form-label"><b>MobileNumber:</b></label>
+        <div class="col-sm-4">
+            <input class="form-control" type="text" name="mobilenum" value="<?php echo $mobilenum;?>">
+            <span class="error"><?php if(isset($mobilenumErr)) {echo $mobilenumErr;}?></span> 
+        </div>
+    </div>
+    <div id="reason">
+        <div class="row mb-3">
+            <label for="reason" class="col-sm-2 form-label"><b>Select Reason:</b></label>
+            <div class="form-check form-check-inline col-sm-2">
+                <input class="form-check-input" type="radio" name="reason" 
+                <?php if(isset($reason) && $reason=="marriage"){echo "checked";}?> value="marriage" required>Marriage
+            </div>
+            <div class="form-check form-check-inline col-sm-2">
+                <input class="form-check-input" type="radio" name="reason"
+                <?php if(isset($reason) && $reason=="medical emergency"){echo "checked";}?> value="medical emergency" required>Medical Emergency
+                <span class="error"><?php if(isset($reasonErr)) {echo $reasonErr;}?></span>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="form-label"><b>From place of travel:</b></label><br><br>
+        <div class="col-md-2">
+            <label for="district" class="form-label">Select District:</label>
+            <select class="form-select form-select-sm" name="district" id="district" value="<?php echo $district;?>">
+            <option value="0">--Select District--</option>
+            <?php
+            $conn = mysqli_connect("localhost","root","","form epass");
+            $sql="SELECT * FROM `district`";
+            $result=mysqli_query($conn,$sql);
+            while($row=mysqli_fetch_array($result)){
+                echo "<option value=".$row["District_id"].">".$row["District"]."</option>";
+            }
+            ?>
+            </select>
+            <span class="error"><?php if(isset($districtErr)){echo $districtErr;}?></span>
+        </div>
+        <div class="col-md-2">
+            <label for="city" class="form-label">Select City:</label>
+            <select class="form-select form-select-sm" name="city" id="city" value="<?php echo $city;?>">
+            <option value="0">--Select city--</option>
+            </select>
+            <span class="error"><?php if(isset($cityErr)){echo $cityErr;}?></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="form-label"><b>Destination place:</b></label><br><br>
+        <div class="col-md-2">
+            <label for="destinationdistrict" class="form-label">Select District:</label>
+            <select class="form-select form-select-sm" name="destinationdistrict" id="destinationdistrict" value="<?php echo $ddistrict; ?>">
+            <option value="0">--Select District--</option>
+            <?php
+            $conn = mysqli_connect("localhost","root","","form epass");
+            $sql="SELECT * FROM `district`";
+            $result=mysqli_query($conn,$sql);
+            while($row=mysqli_fetch_array($result)){
+                echo "<option value=".$row["District_id"].">".$row["District"]."</option>";
+            }
+            ?>
+            </select>
+            <span class="error"><?php if(isset($ddistrictErr)){echo $ddistrictErr;}?></span>
+        </div>
+        <div class="col-md-2">
+            <label for="destinationcity" class="form-label">Select City:</label>
+            <select class="form-select form-select-sm" name="destinationcity" id="destinationcity" value="<?php echo $dcity;?>">
+            <option>--Select City--</option>
+            </select>
+            <span class="error"><?php if(isset($dcityErr)){echo $dcityErr;}?></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="date" class="col-sm-2 form-label"><b>Date:</b></label>
+        <div class="col-sm-4"> 
+            <input class="form-control" type="text" id="date" name="date" placeholder="MM/DD/YYYY" value="<?php echo $date;?>"> 
+            <span class="error"><?php if(isset($dateErr)){echo $dateErr;}?></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="vehicle" class="col-sm-2 form-label"><b>Vehicle number:</b></label>
+        <div class="col-sm-4">
+            <input class="form-control" type="text" name="vehicle" value="<?php echo $vehicle;?>">
+            <span class="error"><?php if(isset($vehicleErr)) {echo $vehicleErr;}?></span> 
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="formFile" class="form-label col-sm-2"><b>Upload document:</b></label>
+        <div class="col-sm-4">
+            <input class="form-control" type="file"  name="file" id="formFile" value="<?php echo $destination;?>">
+            <span class="error"><?php if(isset($fileError)){echo $fileError;}?></span>
+            <span class="error"><?php if(isset($fileErr)){echo $fileErr;}?></span><br>
+        </div>
+    </div>
 <p>For proof enter png file,size should not exceed 50kb</p><br>
-<button type="submit" name="register">REGISTER</button>
-<p>After registration you will receive mail for successfull registration</p><br>
-<a href="index.php">HOME PAGE</a>
+<button class="btn btn-primary mb-3" type="submit" name="register">REGISTER</button>
+<p style="margin-top: 5px">After registration you will receive mail for successfull registration</p><br>
+<a class="link-primary" href="index.php">HOME PAGE</a>
 </form> 
 </body>
 <script type="text/javascript">

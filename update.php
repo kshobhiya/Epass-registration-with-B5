@@ -2,12 +2,21 @@
 <html>
 <head>
 <title></title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="bootstrap-5.0.2-dist/css/bootstrap.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+    <style>
+        .error{
+            color: blue;
+            font-style: italic;
+        }
+    </style>
 </head>
 <body>
-<h1>UPDATING EPASS REGISTRATION FORM</h1>
+    <script src="bootstrap-5.0.2-dist/js/bootstrap.js"></script>
+<h4 class="text-center" style="color: blue">Updating Epass Registratiom Form</h4>
 <?php
     require_once "database.php";?>
 <?php
@@ -166,89 +175,135 @@ if(isset($_GET["formid"])){
     }
 }
 ?>
-<form  id="updateform" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"   method="POST" enctype="multipart/form-data"> 
-<label for="firstname">Firstname:</label> 
-<input type="text" name="firstname" value="<?php echo $fname;?>">
-<span class="error"><?php if(isset($fnameErr)) {echo $fnameErr;}?></span>
-<br><br>
-<input type="hidden" name="customerid" value="<?php echo $customerid;?>">
-<input type="hidden" name="formid" value="<?php echo $formid;?>">
-<label for="lastname">Lastname:</label> <input type="text" name="lastname" value="<?php echo $lname;?>">
-<span class="error"><?php if(isset($lnameErr)) {echo $lnameErr;}?></span>
-<br><br>
-<label for="email">Email:</label> <input type="text" name="email" value="<?php echo $email;?>">
-<span class="error"><?php if(isset($emailErr)) {echo $emailErr;}?></span> 
-<br><br>
-<label for="mobilenum">MobileNumber:</label> <input type="text" name="mobilenum" value="<?php echo $mobilenum;?>">
-<span class="error"><?php if(isset($mobilenumErr)) {echo $mobilenumErr;}?></span> 
-<br><br>
-<div id="reason">
-<label for="reason">Select Reason:</label> 
-<input type="radio" name="reason" 
-<?php if($reason == "marriage"){echo "checked";} ?> value="marriage">Marriage
-<input type="radio" name="reason"
-<?php if($reason == "medical emergency"){echo "checked";}?>  value="medical emergency">Medical Emergency
-</div><br><br>
-<label><b>From place of travel:</b></label><br><br>
-<label for="district">Select District:</label>
-<select name="district" id="district" value="<?php echo $district;?>">
-<?php  
-    $sql="SELECT * FROM `district`";
-    $result=mysqli_query($conn,$sql);
-    while($row=mysqli_fetch_array($result)){ ?>
-        <option value=<?php echo $row["District_id"];?> <?php echo ($row["District_id"] == $district)?'selected' : '';?> > <?php echo $row["District"];?></option>; <?php   
-    }    
-?>
-</select>
-<span class="error"><?php if(isset($districtErr)){echo $districtErr;}?></span>
-<label for="city">Select City:</label>
-<select name="city" id="city" value="<?php echo $city;?>">
-<?php 
-    $sql="SELECT * FROM `cities` WHERE `District_id`='$district'";
-    $result=mysqli_query($conn,$sql);
-    while($row=mysqli_fetch_array($result)){ ?>
-        <option value=<?php echo $row["city_id"];?> <?php echo ($row["city_id"] == $city)?'selected' : '';?> > <?php echo $row["cities"];?></option>; <?php 
-    }  
-?>
-</select><br><br>
-<span class="error"><?php if(isset($cityErr)){echo $cityErr;}?></span>
-<label><b>Destination place:</b></label><br><br>
-<label for="destinationdistrict">Select District:</label>
-<select name="destinationdistrict" id="destinationdistrict" value="<?php echo $ddistrict; ?>">
-<?php
-    $sql="SELECT * FROM `district`";
-    $result=mysqli_query($conn,$sql);
-    while($row=mysqli_fetch_array($result)){ ?>
-        <option value=<?php echo $row["District_id"];?> <?php echo ($row["District_id"] == $ddistrict)?'selected' : '';?> > <?php echo $row["District"];?></option>; <?php   
-    }    
-?>
-</select>
-<span class="error"><?php if(isset($ddistrictErr)){echo $ddistrictErr;}?></span>
-<label for="destinationcity">Select City:</label>
-<select name="destinationcity" id="destinationcity" value="<?php echo $dcity;?>">
-<?php
-    $sql="SELECT * FROM `cities`WHERE `District_id`='$ddistrict' ";
-    $result=mysqli_query($conn,$sql);
-    while($row=mysqli_fetch_array($result)){ ?>
-        <option value=<?php echo $row["city_id"];?> <?php echo ($row["city_id"] == $dcity)?'selected' : '';?> > <?php echo $row["cities"];?></option>; <?php   
-    }
-?>
-</select><br><br>
-<span class="error"><?php if(isset($dcityErr)){echo $dcityErr;}?></span>
-<label for="date">Date:</label>
-<input type="text" id="date" name="date" placeholder="MM/DD/YYYY" value="<?php echo $date;?>">
-<span class="error"><?php if(isset($dateErr)){echo $dateErr;}?></span>
-<br><br>
-<label for="vehicle">Vehicle number:</label> <input type="text" name="vehicle" value="<?php echo $vehicle;?>">
-<span class="error"><?php if(isset($vehicleErr)) {echo $vehicleErr;}?></span>
-<br><br>
-<label for="file">Upload document:</label> <input type="file" name="file">
-<span class="error"><?php if(isset($fileErr)){echo $fileErr;}?></span>
-<input type="text"  name="file_old" value="<?php echo $filename;?>">
-<br><br>
-<button type="submit" name="update">UPDATE</button>
-</form>
-<a href="index.php">RETURN</a>
+<div class="container" style="padding: 30px 0px 30px 0px">
+    <form  id="updateform" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"   method="POST" enctype="multipart/form-data">
+    <div class="row mb-3"> 
+        <label for="firstname" class="form-label col-sm-2"><b>Firstname:</b></label>
+        <div class="col-sm-4">
+            <input class="form-control" type="text" name="firstname" value="<?php echo $fname;?>">
+            <span class="error"><?php if(isset($fnameErr)) {echo $fnameErr;}?></span>
+        </div>
+    </div>
+    <input type="hidden" name="customerid" value="<?php echo $customerid;?>">
+    <input type="hidden" name="formid" value="<?php echo $formid;?>">
+    <div class="row mb-3">
+        <label for="lastname" class="form-label col-sm-2"><b>Lastname:</b></label>
+        <div class="col-sm-4">
+            <input class="form-control" type="text" name="lastname" value="<?php echo $lname;?>">
+            <span class="error"><?php if(isset($lnameErr)) {echo $lnameErr;}?></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="email" class="form-label col-sm-2"><b>Email:</b></label>
+        <div class="col-sm-4">
+            <input class="form-control" type="text" name="email" value="<?php echo $email;?>">
+            <span class="error"><?php if(isset($emailErr)) {echo $emailErr;}?></span> 
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="mobilenum" class="form-label col-sm-2"><b>MobileNumber:</b></label>
+        <div class="col-sm-4"> 
+            <input type="text" name="mobilenum" value="<?php echo $mobilenum;?>">
+            <span class="error"><?php if(isset($mobilenumErr)) {echo $mobilenumErr;}?></span> 
+        </div>
+    </div>
+    <div id="reason">
+        <div class="row mb-3">
+            <label for="reason" class="form-label col-sm-2"><b>Select Reason:</b></label>
+            <div class="form-check form-check-inline col-sm-2">
+                <input class="form-check-input" type="radio" name="reason" 
+                <?php if($reason == "marriage"){echo "checked";} ?> value="marriage">Marriage
+            </div>
+            <div class="form-check form-check-inline col-sm-2">
+                <input class="form-check-input" type="radio" name="reason"
+                <?php if($reason == "medical emergency"){echo "checked";}?>  value="medical emergency">Medical Emergency
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label><b>From place of travel:</b></label><br><br>
+        <div class="col-md-2">
+            <label for="district">Select District:</label>
+            <select class="form-select form-select-sm" name="district" id="district" value="<?php echo $district;?>">
+            <?php  
+            $sql="SELECT * FROM `district`";
+            $result=mysqli_query($conn,$sql);
+            while($row=mysqli_fetch_array($result)){ ?>
+                <option value=<?php echo $row["District_id"];?> <?php echo ($row["District_id"] == $district)?'selected' : '';?> > <?php echo $row["District"];?></option>; <?php   
+            }    
+            ?>
+            </select>
+            <span class="error"><?php if(isset($districtErr)){echo $districtErr;}?></span>
+        </div>
+        <div class="col-md-2">
+            <label for="city">Select City:</label>
+            <select class="form-select form-select-sm" name="city" id="city" value="<?php echo $city;?>">
+            <?php 
+            $sql="SELECT * FROM `cities` WHERE `District_id`='$district'";
+            $result=mysqli_query($conn,$sql);
+            while($row=mysqli_fetch_array($result)){ ?>
+                <option value=<?php echo $row["city_id"];?> <?php echo ($row["city_id"] == $city)?'selected' : '';?> > <?php echo $row["cities"];?></option>; <?php 
+            }  
+            ?>
+            </select>
+            <span class="error"><?php if(isset($cityErr)){echo $cityErr;}?></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label><b>Destination place:</b></label><br><br>
+        <div class="col-md-2">
+            <label for="destinationdistrict">Select District:</label>
+            <select class="form-select form-select-sm" name="destinationdistrict" id="destinationdistrict" value="<?php echo $ddistrict; ?>">
+            <?php
+            $sql="SELECT * FROM `district`";
+            $result=mysqli_query($conn,$sql);
+            while($row=mysqli_fetch_array($result)){ ?>
+                <option value=<?php echo $row["District_id"];?> <?php echo ($row["District_id"] == $ddistrict)?'selected' : '';?> > <?php echo $row["District"];?></option>; <?php   
+            }    
+            ?>
+            </select>
+            <span class="error"><?php if(isset($ddistrictErr)){echo $ddistrictErr;}?></span>
+        </div>
+        <div class="col-md-2">
+            <label for="destinationcity">Select City:</label>
+            <select class="form-select form-select-sm" name="destinationcity" id="destinationcity" value="<?php echo $dcity;?>">
+            <?php
+            $sql="SELECT * FROM `cities`WHERE `District_id`='$ddistrict' ";
+            $result=mysqli_query($conn,$sql);
+            while($row=mysqli_fetch_array($result)){ ?>
+                <option value=<?php echo $row["city_id"];?> <?php echo ($row["city_id"] == $dcity)?'selected' : '';?> > <?php echo $row["cities"];?></option>; <?php   
+            }
+            ?>
+            </select>
+            <span class="error"><?php if(isset($dcityErr)){echo $dcityErr;}?></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="date" class="form-label col-sm-2"><b>Date:</b></label>
+        <div class="col-sm-4">
+            <input class="form-control" type="text" id="date" name="date" placeholder="MM/DD/YYYY" value="<?php echo $date;?>">
+            <span class="error"><?php if(isset($dateErr)){echo $dateErr;}?></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="vehicle" class="form-label col-sm-2"><b>Vehicle number:</b></label>
+        <div class="col-sm-4"> 
+            <input class="form-control" type="text" name="vehicle" value="<?php echo $vehicle;?>">
+            <span class="error"><?php if(isset($vehicleErr)) {echo $vehicleErr;}?></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="formFile" class="form-label col-sm-2"><b>Upload document:</b></label>
+        <div class="col-sm-4">
+            <input class="form-control" type="file" name="file" id="formFile">
+            <span class="error"><?php if(isset($fileErr)){echo $fileErr;}?></span>
+        </div>
+        <input class="col-sm-2" type="text"  name="file_old" value="<?php echo $filename;?>">
+    </div>
+    <button class="btn btn-primary" type="submit" name="update">UPDATE</button>
+    </form>
+    <a class="link-primary" href="index.php">RETURN</a>
+</div>
 </body>
 <script type="text/javascript">
 $("#updateform").validate({

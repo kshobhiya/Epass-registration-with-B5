@@ -16,7 +16,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         }elseif(empty($_POST["lastname"])){
             $lnameErr="name is required";
         }elseif(!preg_match("/^[a-zA-Z\s]+$/",$lname)){
-            $lnameErr="only letters are allowed in lastname";
+            $lnameErr="only letters are allowed";
         }elseif(empty($_POST["email"])){
             $emailErr="email is required";
         }elseif(!filter_var($email,FILTER_VALIDATE_EMAIL)){
@@ -28,15 +28,15 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         }elseif(empty($_POST["password"])){
             $passErr="password is required";
         }elseif(strlen($pass) < 10){
-            $passErr="password should contain atleast '10 characters,in that 1 capital letter,1small letter,1number and 1 special character'";
+            $passErr="password should contain atleast '10 characters,in that 1 capital letter,1small letter,1number and 1 special character be must'";
         }elseif(!preg_match("/[A-Z]+/",$pass)){
-            $passErr="password should contain atleast '10 characters,in that 1 capital letter,1small letter,1number and 1 special character'";
+            $passErr="password should contain atleast '10 characters,in that 1 capital letter,1small letter,1number and 1 special character be must'";
         }elseif(!preg_match("/[a-z]+/",$pass)){
-            $passErr="password should contain atleast '10 characters,in that 1 capital letter,1small letter,1number and 1 special character'";
+            $passErr="password should contain atleast '10 characters,in that 1 capital letter,1small letter,1number and 1 special character be must'";
         }elseif(!preg_match("/[0-9]+/",$pass)){
-            $passErr="password should contain atleast '10 characters,in that 1 capital letter,1small letter,1number and 1 special character'";
+            $passErr="password should contain atleast '10 characters,in that 1 capital letter,1small letter,1number and 1 special character be must'";
         }elseif(!preg_match("/[\W]+/",$pass)){
-            $passErr="password should contain atleast '10 characters,in that 1 capital letter,1small letter,1number and 1 special character'";
+            $passErr="password should contain atleast '10 characters,in that 1 capital letter,1small letter,1number and 1 special character be must'";
         }elseif(empty($_POST["cpassword"])){
             $cpassErr="confirm password is required";
         }elseif($pass != $cpass){

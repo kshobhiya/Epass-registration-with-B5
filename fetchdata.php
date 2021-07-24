@@ -44,8 +44,8 @@ if(isset($_SESSION["sessionId"])){
         while($row2=mysqli_fetch_array($result2)){ 
             $destinationarea=$row2["cities"];
         }
-        $edit ="<button> <a href='update.php?formid=".$row["form id"]."'> EDIT </a> </button><br>";
-        $delete ="<button> <a href='delete.php?formid=".$row["form id"]."'> DELETE </a> </button><br>";
+        $edit ="<button class='btn btn-success'> <a class='link-dark' href='update.php?formid=".$row["form id"]."'> EDIT </a> </button><br>";
+        $delete ="<button class='btn btn-danger'> <a class='link-dark' href='delete.php?formid=".$row["form id"]."'> DELETE </a> </button><br>";
         //$delete="<button type='button' id='delete'>DELETE</button>";
         $subarray=array();
         $subarray[]=$row["form id"]; 
