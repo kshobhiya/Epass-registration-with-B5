@@ -1,19 +1,19 @@
 <?php
 require "database.php";
 session_start();
-$fname = $lname = $email =$mobilenum ="";
+$first_name = $last_name = $email =$phone_number ="";
 $id=$_SESSION["sessionId"];
 $sql= "SELECT * FROM `customer` WHERE  `id`='$id'";
 $result=mysqli_query($conn,$sql);
 if(mysqli_num_rows($result) > 0){
     while($row = mysqli_fetch_assoc($result)){
-        $fname=$row["firstname"];
-        $lname=$row["lastname"];
+        $first_name=$row["first_name"];
+        $last_name=$row["last_name"];
         $email=$row["email"];
-        $mobilenum=$row["phonenumber"];
+        $phone_number=$row["phone_number"];
     }
 }
-$reason=$place=$dplace=$date=$vehicle="";
+$reason=$from_district=$from_city=$to_district=$to_city=$date=$vehicle_number="";
 function datevalidation($date){
     $d1="06/01/2020";
     $d2="01/01/2023";
@@ -23,102 +23,71 @@ function datevalidation($date){
         echo "invalid date";
     }
 }
-/*function uploadfile($filename){
-    $file=$_FILES["file"];
-    $filename=$_FILES["file"]["name"];
-    $tmp_name=$_FILES["file"]["tmp_name"];
-    $size=$_FILES["file"]["size"];
-    $error=$_FILES["file"]["error"];
-    $extension=explode('.',$filename);
-    $fileextension=strtolower(end($extension));
-    $isAllowed=array('jpeg','jpg','png','pdf');
-    if(in_array($fileextension, $isAllowed)){
-        if($error === 0){
-            if($size < 50000){
-                $destination="upload/".$filename;
-                move_uploaded_file($tmp_name, $destination);
-                return $destination;
-            }else{
-                header("Location:epassregistration.php?error=file size is too large!");
-                exit();
-                //die("Error:Sorry your file size is too large!file should not exceed 50kb");
-            }
-        }else{
-            header("Location:epassregistration.php?error=there is a error in uploading");
-            exit();
-            //die("Error:Sorry there is an error in uploading");
-        } 
-    }else{
-        header("Location:epassregistration.php?error=this type of file is not allowed to upload");
-        exit();
-        //die("Error:Sorry,this type of file is not allowed to upload.Enter png file");
-    }
-}*/
 if($_SERVER["REQUEST_METHOD"]=="POST"){
     if(isset($_POST["register"])){
-        $fname=$_POST["firstname"];
-        $lname=$_POST["lastname"];
+        $first_name=$_POST["first_name"];
+        $last_name=$_POST["last_name"];
         $email=$_POST["email"];
-        $mobilenum=$_POST["mobilenum"];
+        $phone_=$_POST["phone_number"];
         $reason=$_POST["reason"];
-        $district=$_POST["district"];
-        $city=$_POST["city"];
-        $ddistrict=$_POST["destinationdistrict"];
-        $dcity=$_POST["destinationcity"];
+        $from_district=$_POST["from_district"];
+        $from_city=$_POST["from_city"];
+        $to_district=$_POST["to_district"];
+        $to_city=$_POST["to_city"];
         $date=$_POST["date"];
-        $vehicle=$_POST["vehicle"];
-        $filename=$_FILES["file"]["name"];
-        if(empty($_POST["firstname"])){
-            $fnameErr="name is required";
-        }elseif(!preg_match("/^[a-zA-Z\s]+$/",$fname)){
-            $fnameErr="only letters are allowed";
-        }elseif(empty($_POST["lastname"])){
-            $lnameErr="name is required";
-        }elseif(!preg_match("/^[a-zA-Z\s]+$/",$lname)){
-            $lnameErr="only letters are allowed in lastname";
+        $vehicle_number=$_POST["vehicle_number"];
+        $file_name=$_FILES["file"]["name"];
+        if(empty($_POST["first_name"])){
+            $first_name_err="name is required";
+        }elseif(!preg_match("/^[a-zA-Z\s]+$/",$first_name)){
+            $first_name_err="only letters are allowed";
+        }elseif(empty($_POST["last_name"])){
+            $last_name_err="name is required";
+        }elseif(!preg_match("/^[a-zA-Z\s]+$/",$last_name)){
+            $last_name_err="only letters are allowed in lastname";
         }elseif(empty($_POST["email"])){
-            $emailErr="email is required";
+            $email_err="email is required";
         }elseif(!filter_var($email,FILTER_VALIDATE_EMAIL)){
-            $emailErr="invalid emailid";
-        }elseif(empty($_POST["mobilenum"])){
-            $mobilenumErr="mobile number is required";
-        }elseif(!preg_match("/^[\d]+$/",$mobilenum)){
-            $mobilenumErr="only numbers are allowed";
+            $email_err="invalid email id";
+        }elseif(empty($_POST["phone_number"])){
+            $phone_number_err="mobile number is required";
+        }elseif(!preg_match("/^[\d]+$/",$phone_number)){
+            $phone_number_err="only numbers are allowed";
         }elseif(empty($_POST["reason"])){
-            $reasonErr="reason is required";
-        }elseif(empty($_POST["district"])){
-            $districtErr="district is required";  
-        }elseif(empty($_POST["city"])){
-            $cityErr="city is required"; 
-        }elseif(empty($_POST["destinationdistrict"])){
-            $ddistrictErr="destination district is required"; 
-        }elseif(empty($_POST["destinationcity"])){
-            $dcityErr="destination city is required"; 
+            $reason_err="reason is required";
+        }elseif(empty($_POST["from_district"])){
+            $from_district_err="district is required";  
+        }elseif(empty($_POST["from_city"])){
+            $from_city_err="city is required"; 
+        }elseif(empty($_POST["to_district"])){
+            $to_district_err="destination district is required"; 
+        }elseif(empty($_POST["to_city"])){
+            $to_city_err="destination city is required"; 
         }elseif(empty($_POST["date"])){
-            $dateErr="date is required";
-        }elseif(empty($_POST["vehicle"])){
-            $vehicleErr="vehicle number is required"; 
-        }elseif(!preg_match("/^[a-zA-Z\d]*$/",$vehicle)){
-            $vehicleErr="enter a valid vehicle number";
+            $date_err="date is required";
+        }elseif(empty($_POST["vehicle_number"])){
+            $vehicle_err="vehicle number is required"; 
+        }elseif(!preg_match("/^[a-zA-Z\d]*$/",$vehicle_number)){
+            $vehicle_err="enter a valid vehicle number";
         }elseif(empty($_FILES["file"]["name"])){
-            $fileError="reasonable file for epass should be upload";
+            $file_error="reasonable file for epass should be upload";
         }else{
             if(isset($_FILES["file"]["name"])){
                 $file=$_FILES["file"];
-                $filename=$_FILES["file"]["name"];
+                $file_name=$_FILES["file"]["name"];
                 $tmp_name=$_FILES["file"]["tmp_name"];
                 $size=$_FILES["file"]["size"];
                 $error=$_FILES["file"]["error"];
-                $extension=explode('.',$filename);
-                $fileextension=strtolower(end($extension));
-                $isAllowed=array('jpeg','jpg','png','pdf');
-                if(in_array($fileextension, $isAllowed)){
+                $extension=explode('.',$file_name);
+                $file_extension=strtolower(end($extension));
+                $is_allowed=array('jpeg','jpg','png','pdf');
+                if(in_array($file_extension, $is_allowed)){
                     if($error === 0){
                         if($size < 50000){
-                            $filedestination="upload/".$filename;
-                            move_uploaded_file($tmp_name, $filedestination);
-                            $destination=$filedestination;
-                            $sql="INSERT INTO `registration`(`customer id`,`firstname`, `lastname`, `email`, `phonenumber`, `reason`,`district`,`from place`,`destination district`,`destination place`, `date`, `vehicle number`, `file for reason`) VALUES ('$id','$fname','$lname','$email','$mobilenum','$reason','$district','$city','$ddistrict','$dcity','$date','$vehicle','$destination')";
+                            $file_destination="upload/".$file_name;
+                            move_uploaded_file($tmp_name, $file_destination);
+                            $destination=$file_destination;
+                            $sql="INSERT INTO `registration`(`customer_id`,`first_name`, `last_name`, `email`, `phone_number`, `reason`,`from_district_id`,`from_city_id`,`to_district_id`,`to_city_id`, `date`, `vehicle_number`, `reason_for_travel`) VALUES ('$id','$first_name','$last_name','$email','$phone_number','$reason','$from_district','$from_city','$to_district','$to_city','$date','$vehicle_number','$destination')";
                             $result=mysqli_query($conn,$sql); 
                             if($result == TRUE){
                                 $last_id=mysqli_insert_id($conn);
@@ -127,13 +96,13 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                                 echo "sql error";
                             }
                         }else{
-                            $fileErr="file size is too large!";
+                            $file_err="file size is too large!";
                         }
                     }else{
-                        $fileErr="there is an error in uploading a file";
+                        $file_err="there is an error in uploading a file";
                     } 
                 }else{
-                   $fileErr="this type of file is not allowed to upload";
+                   $file_err="this type of file is not allowed to upload";
                 }
                 
             }

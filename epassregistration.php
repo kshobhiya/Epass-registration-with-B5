@@ -22,19 +22,19 @@
     include "epassregistrationvalidation.php";
 ?>
 <div class="container" style="padding: 30px 0px 30px 0px">
-    <form id="epassform" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"    method="POST" enctype="multipart/form-data">
+    <form id="epass_form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"    method="POST" enctype="multipart/form-data">
     <div class="row mb-3">
-        <label for="firstname" class="col-sm-2 form-label"><b>Firstname:</b></label>
+        <label for="first_name" class="col-sm-2 form-label"><b>Firstname:</b></label>
         <div class="col-sm-4">
-            <input class="form-control" type="text" name="firstname" value="<?php echo $fname;?>">
-            <span class="error"><?php if(isset($fnameErr)) {echo $fnameErr;}?></span>
+            <input class="form-control" type="text" name="first_name" value="<?php echo $first_name;?>">
+            <span class="error"><?php if(isset($first_name_err)) {echo $first_name_err;}?></span>
         </div>
     </div>
     <div class="row mb-3">
-        <label for="lastname" class="col-sm-2 form-label"><b>Lastname:</b></label>
+        <label for="last_name" class="col-sm-2 form-label"><b>Lastname:</b></label>
         <div class="col-sm-4">
-            <input class="form-control" type="text" name="lastname" value="<?php echo $lname;?>">
-            <span class="error"><?php if(isset($lnameErr)) {echo $lnameErr;}?></span>
+            <input class="form-control" type="text" name="last_name" value="<?php echo $last_name;?>">
+            <span class="error"><?php if(isset($last_name_err)) {echo $last_name_err;}?></span>
         </div>
     </div>
     <div class="row mb-3">
@@ -45,10 +45,10 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="mobilenum" class="col-sm-2 form-label"><b>MobileNumber:</b></label>
+        <label for="phone_number" class="col-sm-2 form-label"><b>Phone Number:</b></label>
         <div class="col-sm-4">
-            <input class="form-control" type="text" name="mobilenum" value="<?php echo $mobilenum;?>">
-            <span class="error"><?php if(isset($mobilenumErr)) {echo $mobilenumErr;}?></span> 
+            <input class="form-control" type="text" name="phone_number" value="<?php echo $phone_number;?>">
+            <span class="error"><?php if(isset($phone_number_err)) {echo $phone_number_err;}?></span> 
         </div>
     </div>
     <div id="reason">
@@ -61,80 +61,80 @@
             <div class="form-check form-check-inline col-sm-2">
                 <input class="form-check-input" type="radio" name="reason"
                 <?php if(isset($reason) && $reason=="medical emergency"){echo "checked";}?> value="medical emergency" required>Medical Emergency
-                <span class="error"><?php if(isset($reasonErr)) {echo $reasonErr;}?></span>
+                <span class="error"><?php if(isset($reason_err)) {echo $reason_err;}?></span>
             </div>
         </div>
     </div>
     <div class="row mb-3">
         <label class="form-label"><b>From place of travel:</b></label><br><br>
         <div class="col-md-2">
-            <label for="district" class="form-label">Select District:</label>
-            <select class="form-select form-select-sm" name="district" id="district" value="<?php echo $district;?>">
-            <option value="0">--Select District--</option>
+            <label for="from_district" class="form-label">Select District:</label>
+            <select class="form-select form-select-sm" name="from_district" id="from_district" value="<?php echo $from_district;?>">
+            <option value="">--Select District--</option>
             <?php
             $conn = mysqli_connect("localhost","root","","form epass");
             $sql="SELECT * FROM `district`";
             $result=mysqli_query($conn,$sql);
             while($row=mysqli_fetch_array($result)){
-                echo "<option value=".$row["District_id"].">".$row["District"]."</option>";
+                echo "<option value=".$row["district_id"].">".$row["district"]."</option>";
             }
             ?>
             </select>
-            <span class="error"><?php if(isset($districtErr)){echo $districtErr;}?></span>
+            <span class="error"><?php if(isset($from_district_err)){echo $from_district_err;}?></span>
         </div>
         <div class="col-md-2">
-            <label for="city" class="form-label">Select City:</label>
-            <select class="form-select form-select-sm" name="city" id="city" value="<?php echo $city;?>">
-            <option value="0">--Select city--</option>
+            <label for="from_city" class="form-label">Select City:</label>
+            <select class="form-select form-select-sm" name="from_city" id="from_city" value="<?php echo $from_city;?>">
+            <option value="">--Select city--</option>
             </select>
-            <span class="error"><?php if(isset($cityErr)){echo $cityErr;}?></span>
+            <span class="error"><?php if(isset($from_city_err)){echo $from_city_err;}?></span>
         </div>
     </div>
     <div class="row mb-3">
         <label class="form-label"><b>Destination place:</b></label><br><br>
         <div class="col-md-2">
-            <label for="destinationdistrict" class="form-label">Select District:</label>
-            <select class="form-select form-select-sm" name="destinationdistrict" id="destinationdistrict" value="<?php echo $ddistrict; ?>">
-            <option value="0">--Select District--</option>
+            <label for="to_district" class="form-label">Select District:</label>
+            <select class="form-select form-select-sm" name="to_district" id="to_district" value="<?php echo $to_district; ?>">
+            <option value="">--Select District--</option>
             <?php
             $conn = mysqli_connect("localhost","root","","form epass");
             $sql="SELECT * FROM `district`";
             $result=mysqli_query($conn,$sql);
             while($row=mysqli_fetch_array($result)){
-                echo "<option value=".$row["District_id"].">".$row["District"]."</option>";
+                echo "<option value=".$row["district_id"].">".$row["district"]."</option>";
             }
             ?>
             </select>
-            <span class="error"><?php if(isset($ddistrictErr)){echo $ddistrictErr;}?></span>
+            <span class="error"><?php if(isset($to_district_err)){echo $to_district_err;}?></span>
         </div>
         <div class="col-md-2">
-            <label for="destinationcity" class="form-label">Select City:</label>
-            <select class="form-select form-select-sm" name="destinationcity" id="destinationcity" value="<?php echo $dcity;?>">
-            <option>--Select City--</option>
+            <label for="to_city" class="form-label">Select City:</label>
+            <select class="form-select form-select-sm" name="to_city" id="to_city" value="<?php echo $to_city;?>">
+            <option value="">--Select City--</option>
             </select>
-            <span class="error"><?php if(isset($dcityErr)){echo $dcityErr;}?></span>
+            <span class="error"><?php if(isset($to_city_err)){echo $to_city_err;}?></span>
         </div>
     </div>
     <div class="row mb-3">
         <label for="date" class="col-sm-2 form-label"><b>Date:</b></label>
         <div class="col-sm-4"> 
             <input class="form-control" type="text" id="date" name="date" placeholder="MM/DD/YYYY" value="<?php echo $date;?>"> 
-            <span class="error"><?php if(isset($dateErr)){echo $dateErr;}?></span>
+            <span class="error"><?php if(isset($date_err)){echo $date_err;}?></span>
         </div>
     </div>
     <div class="row mb-3">
-        <label for="vehicle" class="col-sm-2 form-label"><b>Vehicle number:</b></label>
+        <label for="vehicle_number" class="col-sm-2 form-label"><b>Vehicle number:</b></label>
         <div class="col-sm-4">
-            <input class="form-control" type="text" name="vehicle" value="<?php echo $vehicle;?>">
-            <span class="error"><?php if(isset($vehicleErr)) {echo $vehicleErr;}?></span> 
+            <input class="form-control" type="text" name="vehicle_number" value="<?php echo $vehicle_number;?>">
+            <span class="error"><?php if(isset($vehicle_err)) {echo $vehicle_err;}?></span> 
         </div>
     </div>
     <div class="row mb-3">
         <label for="formFile" class="form-label col-sm-2"><b>Upload document:</b></label>
         <div class="col-sm-4">
             <input class="form-control" type="file"  name="file" id="formFile" value="<?php echo $destination;?>">
-            <span class="error"><?php if(isset($fileError)){echo $fileError;}?></span>
-            <span class="error"><?php if(isset($fileErr)){echo $fileErr;}?></span><br>
+            <span class="error"><?php if(isset($file_error)){echo $file_error;}?></span>
+            <span class="error"><?php if(isset($file_err)){echo $file_err;}?></span><br>
         </div>
     </div>
 <p>For proof enter png file,size should not exceed 50kb</p><br>
@@ -144,19 +144,19 @@
 </form> 
 </body>
 <script type="text/javascript">
-$("#epassform").validate({
+$("#epass_form").validate({
     rules:{
-        firstname:{
+        first_name:{
             required: true
         },
-        lastname:{
+        last_name:{
             required: true
         },
         email:{
             required: true,
             email: true
         },
-        mobilenum:{
+        phone_number:{
             required: true,
             number: true,
             minlength: 10,
@@ -165,22 +165,22 @@ $("#epassform").validate({
         reason:{
             required:true
         },
-        district:{
+        from_district:{
             required:true
         },
-        city:{
+        from_city:{
             required:true
         },
-        destinationdistrict:{
+        to_district:{
             required:true
         },
-        destinationcity:{
+        to_city:{
             required:true
         },
         date:{
             required: true
         },
-        vehicle:{
+        vehicle_number:{
             required: true
         },
         file:{
@@ -188,17 +188,17 @@ $("#epassform").validate({
         }
     },
     messages:{
-        firstname:{
+        first_name:{
             required:"enter your first name"
         },
-        lastname:{
+        last_name:{
             required:"enter your last name"
         },
         email:{
             required:"enter your email id",
             email:"enter valid email id"
         },
-        mobilenum:{
+        phone_number:{
             required:"enter your phonenumber",
             number: "only numbers are allowed",
             minlength: "must contain only 10 number",
@@ -207,22 +207,22 @@ $("#epassform").validate({
         reason:{
             required:"enter reason for travel"
         },
-        district:{
-            required:"this field is required"
+        from_district:{
+            required:"from district is required"
         },
-        city:{
-            required:"this field is required"
+        from_city:{
+            required:"from place is required"
         },
-        destinationdistrict:{
-            required:"this field is required"
+        to_district:{
+            required:"destination district is required"
         },
-        destinationcity:{
-            required:"this field is required"
+        to_city:{
+            required:"destination place is required"
         },
         date:{
             required:"date is required"
         },
-        vehicle:{
+        vehicle_number:{
             required:"vehicle number is required"
         },
         file:{
@@ -249,7 +249,7 @@ $( function() {
 </script>
 <script type="text/javascript">
 $(document).ready(function(){
-    $("#district").change(function(){
+    $("#from_district").change(function(){
         var district_id = $(this).val();
         var postid = "id="+district_id;
         $.ajax({
@@ -257,7 +257,7 @@ $(document).ready(function(){
             url: "fromplace.php",
             data: postid,
             success: function(city){
-                $("#city").html(city);
+                $("#from_city").html(city);
             }
         });
     });
@@ -265,7 +265,7 @@ $(document).ready(function(){
 </script>
 <script type="text/javascript">
 $(document).ready(function(){
-    $("#destinationdistrict").change(function(){
+    $("#to_district").change(function(){
         var desdistrict_id = $(this).val();
         var despostid = "did="+ desdistrict_id;
         $.ajax({
@@ -273,7 +273,7 @@ $(document).ready(function(){
             url: "destinationplace.php",
             data: despostid,
             success: function(destinationcity){
-                $("#destinationcity").html(destinationcity);
+                $("#to_city").html(destinationcity);
             }
         });
     });        

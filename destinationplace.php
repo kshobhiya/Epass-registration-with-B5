@@ -3,11 +3,11 @@
     if($_POST["did"]){
         $id=$_POST["did"];
         if($id == 0){
- 		       echo "<option>--Select City--</option>";
+ 		       echo "<option value=''>--Select City--</option>";
         }else{
-            $sql="SELECT * FROM `cities` WHERE `District_id`='$id'";
+            $sql="SELECT * FROM `cities` WHERE `district_id`='$id'";
             $result=mysqli_query($conn,$sql); ?>
-            <option>--Select City--</option>
+            <option value="">--Select City--</option>
             <?php
             while($row=mysqli_fetch_array($result)){
                 echo "<option value=".$row["city_id"].">".$row["cities"]."</option>";

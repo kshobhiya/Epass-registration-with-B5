@@ -29,88 +29,56 @@ function datevalidation($date) {
         echo "date is out of coverage";
     }
 }
-/*function uploadfile($filename){
-    $file=$_FILES["file"];
-    $filename=$_FILES["file"]["name"];
-    $tmp_name=$_FILES["file"]["tmp_name"];
-    $size=$_FILES["file"]["size"];
-    $error=$_FILES["file"]["error"];
-    $extension=explode('.',$filename);
-    $fileextension=strtolower(end($extension));
-    $isAllowed=array('jpeg','jpg','png','pdf');
-    if(in_array($fileextension, $isAllowed)){
-        if($error === 0){
-            if($size < 50000){
-                $update_filename="upload/".$filename;
-                move_uploaded_file($tmp_name, $update_filename);
-                header("Location: update.php?success");
-                return $update_filename;
-            }else{
-                //header("Location:update.php?error=filesizeistoolarge!");
-                //exit();
-                die("Error:file size is too large!upload file less than 50kb");
-            }
-        }else{
-            //header("Location:update.php?error=thereisaerrorinuploading");
-            // exit();
-            die("Error:there is a error in uploading");
-        }
-    }else{
-        //header("Location: update.php?thistypeoffileisnotallowedtoupload");
-        //exit();
-        die("Error:this type of file is not allowed to upload");
-    }
-}*/
-$fname = $lname = $email =$mobilenum ="";
-$reason=$place=$dplace=$date=$vehicle="";
+$first_name = $last_name = $email =$phone_number ="";
+$reason=$from_district=$from_city=$to_district=$to_city=$date=$vehicle_number="";
 if(isset($_POST["update"])){
-    $formid=$_POST["formid"];
-    $fname=$_POST["firstname"];
-    $lname=$_POST["lastname"];
+    $id=$_POST["id"];
+    $first_name=$_POST["first_name"];
+    $last_name=$_POST["last_name"];
     $email=$_POST["email"];
-    $mobilenum=$_POST["mobilenum"];
+    $phone_number=$_POST["phone_number"];
     $reason=$_POST["reason"];
-    $district=$_POST["district"];
-    $city=$_POST["city"];
-    $ddistrict=$_POST["destinationdistrict"];
-    $dcity=$_POST["destinationcity"];
+    $from_district=$_POST["from_district"];
+    $from_city=$_POST["from_city"];
+    $to_district=$_POST["to_district"];
+    $to_city=$_POST["to_city"];
     $date=$_POST["date"];
-    $vehicle=$_POST["vehicle"];
+    $vehicle_number=$_POST["vehicle_number"];
     $new_image=$_FILES["file"]["name"];
     $old_image=$_POST["file_old"];
-    if(empty($_POST["firstname"])){
-        $fnameErr="name is required";
-    }elseif(!preg_match("/^[a-zA-Z\s]+$/",$fname)){
-        $fnameErr="only letters are allowed";
-    }elseif(empty($_POST["lastname"])){
-        $lnameErr="name is required";
-    }elseif(!preg_match("/^[a-zA-Z\s]+$/",$lname)){
-        $lnameErr="only letters are allowed in lastname";
+    if(empty($_POST["first_name"])){
+        $first_name_err="name is required";
+    }elseif(!preg_match("/^[a-zA-Z\s]+$/",$first_name)){
+        $first_name_err="only letters are allowed";
+    }elseif(empty($_POST["last_name"])){
+        $last_name_err="name is required";
+    }elseif(!preg_match("/^[a-zA-Z\s]+$/",$last_name)){
+        $last_name_err="only letters are allowed in lastname";
     }elseif(empty($_POST["email"])){
-        $emailErr="email is required";
+        $email_err="email is required";
     }elseif(!filter_var($email,FILTER_VALIDATE_EMAIL)){
-        $emailErr="invalid emailid";
-    }elseif(empty($_POST["mobilenum"])){
-        $mobileNumErr="mobile number is required";
-    }elseif(!preg_match("/^[\d]+$/",$mobilenum)){
-        $mobileNumErr="only numbers are allowed";
-    }elseif(empty($_POST["district"])){
-        $districtErr="district is required";  
-    }elseif(empty($_POST["city"])){
-        $cityErr="city is required"; 
-    }elseif(empty($_POST["destinationdistrict"])){
-        $ddistrictErr="destination district is required"; 
-    }elseif(empty($_POST["destinationcity"])){
-        $dcityErr="destination city is required"; 
+        $email_err="invalid emailid";
+    }elseif(empty($_POST["phone_number"])){
+        $phone_number_err="mobile number is required";
+    }elseif(!preg_match("/^[\d]+$/",$phone_number)){
+        $phone_number_err="only numbers are allowed";
+    }elseif(empty($_POST["from_district"])){
+        $from_district_err="district is required";  
+    }elseif(empty($_POST["from_city"])){
+        $from_city_err="city is required"; 
+    }elseif(empty($_POST["to_district"])){
+        $to_district_err="destination district is required"; 
+    }elseif(empty($_POST["to_city"])){
+        $to_city_err="destination city is required"; 
     }elseif(empty($_POST["date"])){
-        $dateErr="date is required";
-    }elseif(empty($_POST["vehicle"])){
-        $vehicleErr="vehicle number is required"; 
-    }elseif(!preg_match("/^[a-zA-Z\d]*$/",$vehicle)){
-        $vehicleErr="enter a valid vehicle number";
+        $date_err="date is required";
+    }elseif(empty($_POST["vehicle_number"])){
+        $vehicle_err="vehicle number is required"; 
+    }elseif(!preg_match("/^[a-zA-Z\d]*$/",$vehicle_number)){
+        $vehicle_err="enter a valid vehicle number";
     }elseif($_FILES["file"]["name"] == ""){
-        $updatedfile=$old_image;
-        $sql="UPDATE `registration` SET `firstname`='$fname',`lastname`='$lname',`email`='$email',`phonenumber`='$mobilenum',`reason`='$reason',`from place`='$city',`destination place`='$dcity',`date`='$date',`vehicle number`='$vehicle' WHERE `form Id`='$formid'";
+        $updated_file=$old_image;
+        $sql="UPDATE `registration` SET `first_name`='$first_name',`last_name`='$last_name',`email`='$email',`phone_number`='$phone_number',`reason`='$reason',`from_district_id`='$from_district',`from_city_id`='$from_city',`to_district_id`='$to_district',`to_city_id`='$to_city',`date`='$date',`vehicle_number`='$vehicle_number' WHERE `id`='$id'";
         $result=mysqli_query($conn,$sql); 
         if($result == TRUE){
             header("Location:index.php?success=data get edited successfully");
@@ -119,58 +87,58 @@ if(isset($_POST["update"])){
     }else{ 
         //$updatedfile=uploadfile($new_image);
         $file=$_FILES["file"];
-        $filename=$_FILES["file"]["name"];
+        $file_name=$_FILES["file"]["name"];
         $tmp_name=$_FILES["file"]["tmp_name"];
         $size=$_FILES["file"]["size"];
         $error=$_FILES["file"]["error"];
-        $extension=explode('.',$filename);
-        $fileextension=strtolower(end($extension));
-        $isAllowed=array('jpeg','jpg','png','pdf');
-        if(in_array($fileextension, $isAllowed)){
+        $extension=explode('.',$file_name);
+        $file_extension=strtolower(end($extension));
+        $is_allowed=array('jpeg','jpg','png','pdf');
+        if(in_array($file_extension, $is_allowed)){
             if($error === 0){
                 if($size < 50000){
                     unlink("upload/".$old_image);
-                    $update_filename="upload/".$filename;
+                    $update_filename="upload/".$file_name;
                     move_uploaded_file($tmp_name, $update_filename);
                     header("Location: update.php?success");
-                    $updatedfile=$update_filename;
-                    $sql="UPDATE `registration` SET `firstname`='$fname',`lastname`='$lname',`email`='$email',`phonenumber`='$mobilenum',`reason`='$reason',`from place`='$city',`destination place`='$dcity',`date`='$date',`vehicle number`='$vehicle',`file for reason`='$updatedfile' WHERE `form Id`='$formid'";
+                    $updated_file=$update_filename;
+                    $sql="UPDATE `registration` SET `first_name`='$first_name',`last_name`='$last_name',`email`='$email',`phone_number`='$phone_number',`reason`='$reason',`from_district_id`='$from_district',`from_city_id`='$from_city',`to_district_id`='$to_district',`to_city_id`='$to_city',`date`='$date',`vehicle_number`='$vehicle_number',`reason_for_travel`='$updated_file' WHERE `id`='$id'";
                     $result=mysqli_query($conn,$sql); 
                     if($result == TRUE){
                         header("Location:index.php?success=data and image get updated successfully");
                         exit();
                     }
                 }else{
-                    $fileErr="file size is too large!";
+                    $file_err="file size is too large!";
                 }
             }else{
-            $fileErr="there is an error in uploading file";
+            $file_err="there is an error in uploading file";
             }
         }else{
-        $fileErr="this type of file is not allowed to upload";
+        $file_err="this type of file is not allowed to upload";
         }
     }
 }
 if(isset($_GET["formid"])){
-    $formid = $_GET["formid"];
-    $sql= "SELECT * FROM `registration` WHERE  `form id`='$formid'";
+    $form_id = $_GET["formid"];
+    $sql= "SELECT * FROM `registration` WHERE  `id`='$form_id'";
     $result=mysqli_query($conn,$sql);
     if(mysqli_num_rows($result) > 0){
         while($row = mysqli_fetch_assoc($result)){
-            $formid=$row["form id"];
-            $customerid=$row["customer id"];
-            $fname=$row["firstname"];
-            $lname=$row["lastname"];
+            $id=$row["id"];
+            $customer_id=$row["customer_id"];
+            $first_name=$row["first_name"];
+            $last_name=$row["last_name"];
             $email=$row["email"];
-            $mobilenum=$row["phonenumber"];
+            $phone_number=$row["phone_number"];
             $reason=$row["reason"];
-            $district=$row["district"];
-            $city=$row["from place"];
-            $ddistrict=$row["destination district"];
-            $dcity=$row["destination place"];
+            $from_district=$row["from_district_id"];
+            $from_city=$row["from_city_id"];
+            $to_district=$row["to_district_id"];
+            $to_city=$row["to_city_id"];
             $date=$row["date"];
-            $vehicle=$row["vehicle number"];
-            $filename=$row["file for reason"];
+            $vehicle_number=$row["vehicle_number"];
+            $file_name=$row["reason_for_travel"];
         }
     }
 }
@@ -178,33 +146,33 @@ if(isset($_GET["formid"])){
 <div class="container" style="padding: 30px 0px 30px 0px">
     <form  id="updateform" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"   method="POST" enctype="multipart/form-data">
     <div class="row mb-3"> 
-        <label for="firstname" class="form-label col-sm-2"><b>Firstname:</b></label>
+        <label for="first_name" class="form-label col-sm-2"><b>Firstname:</b></label>
         <div class="col-sm-4">
-            <input class="form-control" type="text" name="firstname" value="<?php echo $fname;?>">
-            <span class="error"><?php if(isset($fnameErr)) {echo $fnameErr;}?></span>
+            <input class="form-control" type="text" name="first_name" value="<?php echo $first_name;?>">
+            <span class="error"><?php if(isset($first_name_err)) {echo $first_name_err;}?></span>
         </div>
     </div>
-    <input type="hidden" name="customerid" value="<?php echo $customerid;?>">
-    <input type="hidden" name="formid" value="<?php echo $formid;?>">
+    <input type="hidden" name="customer_id" value="<?php echo $customer_id;?>">
+    <input type="hidden" name="id" value="<?php echo $id;?>">
     <div class="row mb-3">
-        <label for="lastname" class="form-label col-sm-2"><b>Lastname:</b></label>
+        <label for="last_name" class="form-label col-sm-2"><b>Lastname:</b></label>
         <div class="col-sm-4">
-            <input class="form-control" type="text" name="lastname" value="<?php echo $lname;?>">
-            <span class="error"><?php if(isset($lnameErr)) {echo $lnameErr;}?></span>
+            <input class="form-control" type="text" name="last_name" value="<?php echo $last_name;?>">
+            <span class="error"><?php if(isset($last_name_err)) {echo $last_name_err;}?></span>
         </div>
     </div>
     <div class="row mb-3">
         <label for="email" class="form-label col-sm-2"><b>Email:</b></label>
         <div class="col-sm-4">
             <input class="form-control" type="text" name="email" value="<?php echo $email;?>">
-            <span class="error"><?php if(isset($emailErr)) {echo $emailErr;}?></span> 
+            <span class="error"><?php if(isset($email_err)) {echo $email_err;}?></span> 
         </div>
     </div>
     <div class="row mb-3">
-        <label for="mobilenum" class="form-label col-sm-2"><b>MobileNumber:</b></label>
+        <label for="phone_number" class="form-label col-sm-2"><b>MobileNumber:</b></label>
         <div class="col-sm-4"> 
-            <input type="text" name="mobilenum" value="<?php echo $mobilenum;?>">
-            <span class="error"><?php if(isset($mobilenumErr)) {echo $mobilenumErr;}?></span> 
+            <input type="text" name="phone_number" value="<?php echo $phone_number;?>">
+            <span class="error"><?php if(isset($phone_number_err)) {echo $phone_number_err;}?></span> 
         </div>
     </div>
     <div id="reason">
@@ -223,82 +191,82 @@ if(isset($_GET["formid"])){
     <div class="row mb-3">
         <label><b>From place of travel:</b></label><br><br>
         <div class="col-md-2">
-            <label for="district">Select District:</label>
-            <select class="form-select form-select-sm" name="district" id="district" value="<?php echo $district;?>">
+            <label for="from_district">Select District:</label>
+            <select class="form-select form-select-sm" name="from_district" id="from_district" value="<?php echo $from_district;?>">
             <?php  
             $sql="SELECT * FROM `district`";
             $result=mysqli_query($conn,$sql);
             while($row=mysqli_fetch_array($result)){ ?>
-                <option value=<?php echo $row["District_id"];?> <?php echo ($row["District_id"] == $district)?'selected' : '';?> > <?php echo $row["District"];?></option>; <?php   
+                <option value=<?php echo $row["district_id"];?> <?php echo ($row["district_id"] == $from_district)?'selected' : '';?> > <?php echo $row["district"];?></option>; <?php   
             }    
             ?>
             </select>
-            <span class="error"><?php if(isset($districtErr)){echo $districtErr;}?></span>
+            <span class="error"><?php if(isset($district_err)){echo $district_err;}?></span>
         </div>
         <div class="col-md-2">
-            <label for="city">Select City:</label>
-            <select class="form-select form-select-sm" name="city" id="city" value="<?php echo $city;?>">
+            <label for="from_city">Select City:</label>
+            <select class="form-select form-select-sm" name="from_city" id="from_city" value="<?php echo $from_city;?>">
             <?php 
-            $sql="SELECT * FROM `cities` WHERE `District_id`='$district'";
+            $sql="SELECT * FROM `cities` WHERE `district_id`='$from_district'";
             $result=mysqli_query($conn,$sql);
             while($row=mysqli_fetch_array($result)){ ?>
-                <option value=<?php echo $row["city_id"];?> <?php echo ($row["city_id"] == $city)?'selected' : '';?> > <?php echo $row["cities"];?></option>; <?php 
+                <option value=<?php echo $row["city_id"];?> <?php echo ($row["city_id"] == $from_city)?'selected' : '';?> > <?php echo $row["cities"];?></option>; <?php 
             }  
             ?>
             </select>
-            <span class="error"><?php if(isset($cityErr)){echo $cityErr;}?></span>
+            <span class="error"><?php if(isset($city_err)){echo $city_err;}?></span>
         </div>
     </div>
     <div class="row mb-3">
         <label><b>Destination place:</b></label><br><br>
         <div class="col-md-2">
-            <label for="destinationdistrict">Select District:</label>
-            <select class="form-select form-select-sm" name="destinationdistrict" id="destinationdistrict" value="<?php echo $ddistrict; ?>">
+            <label for="to_district">Select District:</label>
+            <select class="form-select form-select-sm" name="to_district" id="to_district" value="<?php echo $to_district; ?>">
             <?php
             $sql="SELECT * FROM `district`";
             $result=mysqli_query($conn,$sql);
             while($row=mysqli_fetch_array($result)){ ?>
-                <option value=<?php echo $row["District_id"];?> <?php echo ($row["District_id"] == $ddistrict)?'selected' : '';?> > <?php echo $row["District"];?></option>; <?php   
+                <option value=<?php echo $row["district_id"];?> <?php echo ($row["district_id"] == $to_district)?'selected' : '';?> > <?php echo $row["district"];?></option>; <?php   
             }    
             ?>
             </select>
-            <span class="error"><?php if(isset($ddistrictErr)){echo $ddistrictErr;}?></span>
+            <span class="error"><?php if(isset($to_district_err)){echo $to_district_err;}?></span>
         </div>
         <div class="col-md-2">
-            <label for="destinationcity">Select City:</label>
-            <select class="form-select form-select-sm" name="destinationcity" id="destinationcity" value="<?php echo $dcity;?>">
+            <label for="to_city">Select City:</label>
+            <select class="form-select form-select-sm" name="to_city" id="to_city" value="<?php echo $to_city;?>">
             <?php
-            $sql="SELECT * FROM `cities`WHERE `District_id`='$ddistrict' ";
+            $sql="SELECT * FROM `cities` WHERE `district_id`='$to_district'";
             $result=mysqli_query($conn,$sql);
             while($row=mysqli_fetch_array($result)){ ?>
-                <option value=<?php echo $row["city_id"];?> <?php echo ($row["city_id"] == $dcity)?'selected' : '';?> > <?php echo $row["cities"];?></option>; <?php   
+                <option value=<?php echo $row["city_id"];?> <?php echo ($row["city_id"] == $to_city)?'selected' : '';?> > <?php echo $row["cities"];?></option>; <?php   
             }
             ?>
             </select>
-            <span class="error"><?php if(isset($dcityErr)){echo $dcityErr;}?></span>
+            <span class="error"><?php if(isset($to_city_err)){echo $to_city_err;}?></span>
         </div>
     </div>
     <div class="row mb-3">
         <label for="date" class="form-label col-sm-2"><b>Date:</b></label>
         <div class="col-sm-4">
             <input class="form-control" type="text" id="date" name="date" placeholder="MM/DD/YYYY" value="<?php echo $date;?>">
-            <span class="error"><?php if(isset($dateErr)){echo $dateErr;}?></span>
+            <span class="error"><?php if(isset($date_err)){echo $date_err;}?></span>
         </div>
     </div>
     <div class="row mb-3">
-        <label for="vehicle" class="form-label col-sm-2"><b>Vehicle number:</b></label>
+        <label for="vehicle_number" class="form-label col-sm-2"><b>Vehicle number:</b></label>
         <div class="col-sm-4"> 
-            <input class="form-control" type="text" name="vehicle" value="<?php echo $vehicle;?>">
-            <span class="error"><?php if(isset($vehicleErr)) {echo $vehicleErr;}?></span>
+            <input class="form-control" type="text" name="vehicle_number" value="<?php echo $vehicle_number;?>">
+            <span class="error"><?php if(isset($vehicle_err)) {echo $vehicle_err;}?></span>
         </div>
     </div>
     <div class="row mb-3">
         <label for="formFile" class="form-label col-sm-2"><b>Upload document:</b></label>
         <div class="col-sm-4">
             <input class="form-control" type="file" name="file" id="formFile">
-            <span class="error"><?php if(isset($fileErr)){echo $fileErr;}?></span>
+            <span class="error"><?php if(isset($file_err)){echo $file_err;}?></span>
         </div>
-        <input class="col-sm-2" type="text"  name="file_old" value="<?php echo $filename;?>">
+        <input class="col-sm-2" type="text"  name="file_old" value="<?php echo $file_name;?>">
     </div>
     <button class="btn btn-primary" type="submit" name="update">UPDATE</button>
     </form>
@@ -308,17 +276,17 @@ if(isset($_GET["formid"])){
 <script type="text/javascript">
 $("#updateform").validate({
     rules:{
-        firstname:{
+        first_name:{
             required: true
         },
-        lastname:{
+        last_name:{
             required: true
         },
         email:{
             required: true,
             email: true
         },
-        mobilenum:{
+        phone_number:{
             required: true,
             number: true,
             minlength: 10,
@@ -327,37 +295,37 @@ $("#updateform").validate({
         reason:{
             required: true
         },
-        district:{
+        from_district:{
             required:true
         },
-        city:{
+        from_city:{
             required: true
         },
-        destinationdistrict:{
+        to_district:{
             required:true
         },
-        destinationcity:{
+        to_city:{
             required:true
         },
         date:{
             required: true
         },
-        vehicle:{
+        vehicle_number:{
             required: true
         }
     },
     messages:{
-        firstname:{
+        first_name:{
             required:"enter your first name"
         },
-        lastname:{
+        last_name:{
             required:"enter your last name"
         },
         email:{
             required:"enter your email id",
             email:"enter valid email id"
         },
-        mobilenum:{
+        phone_number:{
             required:"enter your phonenumber",
             number: "only numbers are allowed",
             minlength: "must contain only 10 number",
@@ -366,22 +334,22 @@ $("#updateform").validate({
         reason:{
             required:"enter reason for travel"
         },
-        district:{
+        from_district:{
             required:"district is required"
         },
-        city:{
+        from_city:{
             required:"city is required"
         },
-        destinationdistrict:{
+        to_district:{
             required:"district is required"
         },
-        destinationcity:{
+        to_city:{
             required:"city is required"
         },
         date:{
             required:"date is required"
         },
-        vehicle:{
+        vehicle_number:{
             required:"vehicle number is required"
         }
     },
@@ -408,7 +376,7 @@ $( function() {
 </script>
 <script type="text/javascript">
 $(document).ready(function(){
-    $("#district").change(function(){
+    $("#from_district").change(function(){
         var district_id = $(this).val();
         var postid = "id="+district_id;
         $.ajax({
@@ -416,7 +384,7 @@ $(document).ready(function(){
             url: "fromplace.php",
             data: postid,
             success: function(city){
-                $("#city").html(city);
+                $("#from_city").html(city);
             }
         });
     });
@@ -424,15 +392,15 @@ $(document).ready(function(){
 </script>
 <script type="text/javascript">
 $(document).ready(function(){
-    $("#destinationdistrict").change(function(){
-        var desdistrict_id = $(this).val();
-        var despostid = "did="+ desdistrict_id;
+    $("#to_district").change(function(){
+        var des_district_id = $(this).val();
+        var des_postid = "did="+ des_district_id;
         $.ajax({
             method: "POST",
             url: "destinationplace.php",
-            data: despostid,
-            success: function(destinationcity){
-                $("#destinationcity").html(destinationcity);
+            data: des_postid,
+            success: function(city){
+                $("#to_city").html(city);
             }
         });
     });        

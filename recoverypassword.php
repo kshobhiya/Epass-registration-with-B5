@@ -26,31 +26,31 @@
     </nav>
 <?php
     require "database.php";
-    $email= $rpass = $crpass ="";
+    $email= $password = $confirm_password ="";
     if (isset($_POST["submit"])) { 
         $email = $_POST["email"];
-        $rpass=$_POST["password"];
-        $crpass=$_POST["cpassword"];  
+        $password=$_POST["password"];
+        $confirm_password=$_POST["confirm_password"];  
         if (empty($_POST["email"])) {
-            $emailErr="email id is required";
+            $email_err="email id is required";
         }elseif(empty($_POST["password"])){
-            $rpassErr="password is required";
-        }elseif(strlen($rpass) < 10){
-            $rpassErr="password should contain atleast '10 characters,in that 1 capital letter,1small letter,1number and 1 special character'";
-        }elseif(!preg_match("/[A-Z]+/",$rpass)){
-            $rpassErr="password should contain atleast '10 characters,in that 1 capital letter,1small letter,1number and 1 special character'";
-        }elseif(!preg_match("/[a-z]+/",$rpass)){
-            $rpassErr="password should contain atleast '10 characters,in that 1 capital letter,1small letter,1number and 1 special character'";
-        }elseif(!preg_match("/[0-9]+/",$rpass)){
-            $rpassErr="password should contain atleast '10 characters,in that 1 capital letter,1small letter,1number and 1 special character'";
-        }elseif(!preg_match("/[\W]+/",$rpass)){
-            $rpassErr="password should contain atleast '10 characters,in that 1 capital letter,1small letter,1number and 1 special character'";
-        }elseif(empty($_POST["cpassword"])){
-            $crpassErr="confirm password is required";
-        }elseif($rpass !== $crpass){
+            $password_err="password is required";
+        }elseif(strlen($password) < 10){
+            $password_err="password should contain atleast '10 characters,in that 1 capital letter,1small letter,1number and 1 special character'";
+        }elseif(!preg_match("/[A-Z]+/",$password)){
+            $password_err="password should contain atleast '10 characters,in that 1 capital letter,1small letter,1number and 1 special character'";
+        }elseif(!preg_match("/[a-z]+/",$password)){
+            $password_err="password should contain atleast '10 characters,in that 1 capital letter,1small letter,1number and 1 special character'";
+        }elseif(!preg_match("/[0-9]+/",$password)){
+            $password_err="password should contain atleast '10 characters,in that 1 capital letter,1small letter,1number and 1 special character'";
+        }elseif(!preg_match("/[\W]+/",$password)){
+            $password_err="password should contain atleast '10 characters,in that 1 capital letter,1small letter,1number and 1 special character'";
+        }elseif(empty($_POST["confirm_password"])){
+            $confirm_password_err="confirm password is required";
+        }elseif($password !== $confirm_password){
             echo "password should be same";
         }else{
-            $sql = "UPDATE `customer` SET `password`='$rpass' WHERE `email`='$email'";
+            $sql = "UPDATE `customer` SET `password`='$password' WHERE `email`='$email'";
             $result = mysqli_query($conn,$sql);
             $sql =  "SELECT * FROM `customer`  WHERE  `email`='$email'";
             $result=mysqli_query($conn,$sql);
@@ -58,8 +58,8 @@
                 while($row = mysqli_fetch_assoc($result)){
                     session_start();
                     $_SESSION["sessionId"] = $row["id"];
-                    $_SESSION["sessionfirstname"] = $row["firstname"];
-                    $_SESSION["sessionlastname"] = $row["lastname"];
+                    $_SESSION["sessionFirstName"] = $row["first_name"];
+                    $_SESSION["sessionLastName"] = $row["last_name"];
                     header("Location: index.php?success=youloggedin");
                     exit();    
                 }
@@ -76,21 +76,21 @@
             <label for="email" class="form-label col-sm-2">Email id:</label>
             <div class="col-sm-4">
                 <input class="form-control" type="text" id="email" name="email" value="<?php echo $email;?>">
-                <span class="error"><?php if(isset($emailErr)) {echo $emailErr;}?></span>
+                <span class="error"><?php if(isset($email_err)) {echo $email_err;}?></span>
             </div>
         </div>
         <div class="row mb-3">
             <label for="password" class="form-label col-sm-2">Password:</label>
             <div class="col-sm-4">
-                <input class="form-control" type="password" id="password" name="password" value="<?php echo $rpass;?>">  
-                <span class="error"><?php if(isset($rpassErr)) {echo $rpassErr;}?></span>
+                <input class="form-control" type="password" id="password" name="password" value="<?php echo $password;?>">  
+                <span class="error"><?php if(isset($password_err)) {echo $password_err;}?></span>
             </div>
         </div>
         <div class="row mb-3">
-            <label for="cpassword" class="form-label col-sm-2">Confirm Password:</label>
+            <label for="confirm_password" class="form-label col-sm-2">Confirm Password:</label>
             <div class="col-sm-4">
-                <input class="form-control" type="password" id="cpassword" name="cpassword" value="<?php echo $crpass;?>"> 
-                <span class="error"><?php if(isset($crpassErr)) {echo $crpassErr;}?></span>
+                <input class="form-control" type="password" id="confirm_password" name="confirm_password" value="<?php echo $confirm_password;?>"> 
+                <span class="error"><?php if(isset($confirm_password_err)) {echo $confirm_password_err;}?></span>
             </div>
         </div>
         <button class="btn btn-primary" style="margin: 20px 0px 10px 120px" type="submit" name="submit">SUBMIT</button>
@@ -107,7 +107,7 @@ $(" #recovery ").validate({
             required: true,
             minlength: 10
         },
-        cpassword: {
+        confirm_password: {
             required: true,
             minlength: 10,
             equalTo: "#password"
@@ -121,7 +121,7 @@ $(" #recovery ").validate({
             required: "enter password",
             minlength: "password must have atleast 10 characters"
         },
-        cpassword: {
+        confirm_password: {
             required: "enter confirm password",
             minlength: "password must have atleast 10 characters",
             equalTo: "mismatch in the password"

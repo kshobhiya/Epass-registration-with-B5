@@ -30,45 +30,45 @@
 <div class="container" style="padding: 20px 20px 20px 200px;margin-right: 100px;margin-left: 280px">
     <form id="registerform"  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"  method="POST">
     <div class="row mb-3">
-        <label for="firstname" class="form-label col-sm-2">Firstname:</label>
+        <label for="first_name" class="form-label col-sm-2">Firstname:</label>
         <div class="col-sm-4">
-            <input class="form-control" type="text" id="firstname" name="firstname" value="<?php echo $fname;?>"> 
-            <span class="error"><?php if(isset($fnameErr)) {echo $fnameErr;}?></span>
+            <input class="form-control" type="text" id="first_name" name="first_name" value="<?php echo $first_name;?>"> 
+            <span class="error"><?php if(isset($first_name_err)) {echo $first_name_err;}?></span>
         </div>
     </div>
     <div class="row mb-3">
-        <label for="lastname" class="col-sm-2 form-label">Lastname:</label>
+        <label for="last_name" class="col-sm-2 form-label">Lastname:</label>
         <div class="col-sm-4">
-            <input class="form-control" type="text" id="lastname" name="lastname" value="<?php echo $lname;?>">
-            <span class="error"><?php if(isset($lnameErr)) {echo $lnameErr;}?></span>
+            <input class="form-control" type="text" id="last_name" name="last_name" value="<?php echo $last_name;?>">
+            <span class="error"><?php if(isset($last_name_err)) {echo $last_name_err;}?></span>
         </div>
     </div>
         <div class="row mb-3">
             <label for="email" class="col-sm-2 form-label">Email:</label>
             <div class="col-sm-4">
                 <input class="form-control" type="text" id="email" name="email" value="<?php echo $email;?>" >
-                <span class="error"><?php if(isset($emailErr)) {echo $emailErr;}?></span>
+                <span class="error"><?php if(isset($email_err)) {echo $email_err;}?></span>
             </div>
         </div>
         <div class="row mb-3">
-            <label for="mobilenum" class="col-sm-2 form-label">Phone number: </label>
+            <label for="phone_number" class="col-sm-2 form-label">Phone number: </label>
             <div class="col-sm-4"> 
-                <input class="form-control" type="text" id="mobilenum" name="mobilenum" value="<?php echo $mobileNum;?>">
-                <span class="error"><?php if(isset($mobileNumErr)) {echo $mobileNumErr;}?></span>
+                <input class="form-control" type="text" id="phone_number" name="phone_number" value="<?php echo $phone_number;?>">
+                <span class="error"><?php if(isset($phone_number_err)) {echo $phone_number_err;}?></span>
             </div>
         </div>
         <div class="row mb-3">
             <label for="password" class="col-sm-2 form-label">Password: </label>
             <div class="col-sm-4"> 
-                <input class="form-control" type="password" id="password" name="password" value="<?php echo $pass;?>" >
-                <span class="error"><?php if(isset($passErr)) {echo $passErr;}?></span>
+                <input class="form-control" type="password" id="password" name="password" value="<?php echo $password;?>" >
+                <span class="error"><?php if(isset($password_err)) {echo $password_err;}?></span>
             </div>
         </div>
         <div class="row mb-3">
-            <label for="cpassword" class="col-sm-2 form-label"> Confirm password: </label>
+            <label for="confirm_password" class="col-sm-2 form-label"> Confirm password: </label>
             <div class="col-sm-4"> 
-                <input class="form-control" type="password" id="cpassword" name="cpassword" value="<?php echo $cpass;?>">
-                <span class="error"><?php if(isset($cpassErr)) {echo $cpassErr;}?></span>
+                <input class="form-control" type="password" id="confirm_password" name="confirm_password" value="<?php echo $confirm_password;?>">
+                <span class="error"><?php if(isset($sonfirm_password_err)) {echo $confirm_password_err;}?></span>
             </div>
         </div>
         <button class="btn btn-primary" style="margin-left: 100px;margin-top: 20px" type="submit" name="submit" value="submit">REGISTER</button>
@@ -78,17 +78,17 @@
 <script type="text/javascript">
 $( "#registerform" ).validate({
     rules: {
-        firstname: {
+        first_name: {
             required: true
         },
-        lastname: {
+        last_name: {
             required: true
         },
         email: {
             required: true,
             email: true
         },
-        mobilenum: {
+        phone_number: {
             required: true,
             number: true,
             minlength: 10,
@@ -98,24 +98,24 @@ $( "#registerform" ).validate({
             required: true,
             minlength: 10
         },
-        cpassword: {
+        confirm_password: {
             required: true,
             minlength: 10,
             equalTo: "#password"
         }
     },
     messages: {
-        firstname: {
+        first_name: {
             required: "Enter first name"
         },
-        lastname: {
+        last_name: {
             required: "Enter last name"
         },
         email: {
             required: "Enter emaill id",
             email: "Enter valid email id"
         },
-        mobilenum: {
+        phone_number: {
             required: "Enter phone number",
             number: "only numbers are allowed",
             minlength: "must contain only 10 characters",
@@ -125,7 +125,7 @@ $( "#registerform" ).validate({
             required: "Enter password",
             minlength: "password must have atleast 10 characters"
         },
-        cpassword: {
+        confirm_password: {
             required: "Enter confirm password",
             minlength: "password must have atleast 10 characters",
             equalTo: "mismatch in the password"

@@ -14,7 +14,7 @@
     session_start();
     require_once 'database.php';
     if(isset($_SESSION["sessionId"])){
-        echo "<h3 class='fw-bolder'>welcome</h3>".$_SESSION["sessionfirstname"]." ".$_SESSION["sessionlastname"];
+        echo "<h3 class='fw-bolder'>welcome</h3>".$_SESSION["sessionFirstName"]." ".$_SESSION["sessionLastName"];
         ?><br><br>
         <a class="link-primary" href="epassregistration.php"><b>Epass Registration Form</b></a><br><br>
         <a href="logout.php"><button class="btn btn-danger" type="submit" name="logout" value="logout">Logout</button></a><br><br>
@@ -27,7 +27,7 @@
             <table class="table table-striped" id="epassformindex">
                 <thead>
                 <tr>
-                    <th>Form id</th>
+                    <th>Id</th>
                     <th>First name</th>
                     <th>Last name</th>
                     <th>Email id</th>
@@ -45,7 +45,28 @@
         </div>   
 <?php 
     }else{
-        echo "<h4 class='fw-bolder' style='padding-left:50px'>Home page</h4>";?>
+        echo "<h3 class='fw-bolder' style='padding-left:50px'>Home page</h3>";?>
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" style="padding-left: 30px;padding-right:30px">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="image/roadtravel.jpg" class="d-block w-100" style="height: 450px" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="image/roadvechile.jpg" class="d-block w-100" style="height: 450px" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="image/bike.jpg" class="d-block w-100" style="height: 450px" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
         <nav class="nav flex-column">
             <ul class="nav-item">
                 <li class="nav-link"><a href="login.php">LOG IN</a></li>

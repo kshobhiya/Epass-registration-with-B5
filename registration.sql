@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 20, 2021 at 10:09 AM
+-- Generation Time: Jul 26, 2021 at 04:21 AM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 7.3.28
 
@@ -28,28 +28,27 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `registration` (
-  `form id` int(5) NOT NULL,
-  `customer id` int(5) NOT NULL,
-  `firstname` varchar(30) NOT NULL,
-  `lastname` varchar(30) NOT NULL,
+  `id` int(5) NOT NULL,
+  `customer_id` int(5) NOT NULL,
+  `first_name` varchar(30) NOT NULL,
+  `last_name` varchar(30) NOT NULL,
   `email` varchar(40) NOT NULL,
-  `phonenumber` varchar(30) NOT NULL,
+  `phone_number` varchar(30) NOT NULL,
   `reason` varchar(30) NOT NULL,
-  `district` varchar(100) NOT NULL,
-  `from place` varchar(40) NOT NULL,
-  `destination district` varchar(100) NOT NULL,
-  `destination place` varchar(40) NOT NULL,
+  `from_district_id` varchar(100) NOT NULL,
+  `from_city_id` varchar(40) NOT NULL,
+  `to_district_id` varchar(100) NOT NULL,
+  `to_city_id` varchar(40) NOT NULL,
   `date` varchar(20) NOT NULL,
-  `vehicle number` varchar(30) NOT NULL,
-  `file for reason` varchar(100) NOT NULL
+  `vehicle_number` varchar(30) NOT NULL,
+  `reason_for_travel` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `registration`
 --
 
-INSERT INTO `registration` (`form id`, `customer id`, `firstname`, `lastname`, `email`, `phonenumber`, `reason`, `district`, `from place`, `destination district`, `destination place`, `date`, `vehicle number`, `file for reason`) VALUES
-(3, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'marriage', '', '57', '0', '67', '07/22/2021', 'TN2323', 'upload/60dfd277a21354.29543377.jpg'),
+INSERT INTO `registration` (`id`, `customer_id`, `first_name`, `last_name`, `email`, `phone_number`, `reason`, `from_district_id`, `from_city_id`, `to_district_id`, `to_city_id`, `date`, `vehicle_number`, `reason_for_travel`) VALUES
 (4, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'marriage', '', '77', '0', '19', '2021-10-24', 'TN2345', 'upload/60dfd254bd1613.43580752.jpg'),
 (5, 5, 'Shobhiya', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'medical emergency', '', '82', '0', '10', '2022-11-25', 'TN2323', 'upload/60dfc788965cb9.21269129.jpg'),
 (7, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'marriage', '', '30', '0', '65', '2021-09-04', 'TN2323', 'upload/60dfd118d48c23.19335384.jpg'),
@@ -64,11 +63,9 @@ INSERT INTO `registration` (`form id`, `customer id`, `firstname`, `lastname`, `
 (186, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'marriage', '', '30', '0', '46', '08/11/2021', 'TN2345', 'upload/beautiful-hologram-water-color-frame-png_119551.jpg'),
 (187, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'marriage', '', '67', '0', '40', '07/15/2021', 'TN2323', 'upload/beautiful-hologram-water-color-frame-png_119551.jpg'),
 (190, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'marriage', '', '67', '0', '63', '08/11/2021', 'TN2323', 'upload/beautiful-hologram-water-color-frame-png_119551.jpg'),
-(211, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'medical emergency', '', '71', '0', '2', '07/31/2021', 'TN2323', 'upload/shining-circle-purple-lighting-isolated-dark-background_1441-2396.jpg'),
 (213, 8, 'karthikeyan', 'bavatharani', 'bavakarthi03@gmail.com', '9994847075', 'marriage', '', 'srivilliputtur', '0', 'madurai', '07/23/2021', 'TN2323', 'upload/beautiful-hologram-water-color-frame-png_119551.jpg'),
 (216, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'marriage', '', '64', '0', '25', '09/01/2021', 'TN2345', 'upload/shining-circle-purple-lighting-isolated-dark-background_1441-2396.jpg'),
 (221, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'marriage', '', '46', '0', '42', '07/31/2021', 'TN2325', 'upload/beautiful-hologram-water-color-frame-png_119551.jpg'),
-(230, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'marriage', '10', '79', '8', '5', '07/23/2021', 'TN2345', 'upload/shining-circle-purple-lighting-isolated-dark-background_1441-2396.jpg'),
 (231, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'marriage', '11', '69', '13', '31', '07/23/2021', 'TN232345', 'upload/shining-circle-purple-lighting-isolated-dark-background_1441-2396.jpg'),
 (235, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'marriage', '12', '74', '14', '34', '07/31/2021', 'TN4340', 'upload/beautiful-hologram-water-color-frame-png_119551.jpg'),
 (236, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'medical emergency', '12', '82', '8', '23', '07/20/2021', 'TN232345', 'upload/beautiful-hologram-water-color-frame-png_119551.jpg'),
@@ -93,7 +90,26 @@ INSERT INTO `registration` (`form id`, `customer id`, `firstname`, `lastname`, `
 (257, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'marriage', '20', '75', '14', '60', '08/06/2021', 'TN232345', 'upload/beautiful-hologram-water-color-frame-png_119551.jpg'),
 (259, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'marriage', '26', '92', '26', '93', '08/15/2021', 'TN2345', 'upload/beautiful-hologram-water-color-frame-png_119551.jpg'),
 (260, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'medical emergency', '10', '44', '2', '7', '07/29/2021', 'TN232345', 'upload/beautiful-hologram-water-color-frame-png_119551.jpg'),
-(261, 12, 'karthick', 'rajasekar', 'str.karthick22@gmail.com', '9500441258', 'marriage', '26', '92', '5', '26', '07/27/2021', 'TN2325', 'upload/beautiful-hologram-water-color-frame-png_119551.jpg');
+(261, 12, 'karthick', 'rajasekar', 'str.karthick22@gmail.com', '9500441258', 'marriage', '26', '92', '5', '26', '07/27/2021', 'TN2325', 'upload/beautiful-hologram-water-color-frame-png_119551.jpg'),
+(262, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'marriage', '7', '34', '20', '75', '09/03/2021', 'TN2389', 'upload/beautiful-hologram-water-color-frame-png_119551.jpg'),
+(263, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'medical emergency', '17', '67', '6', '30', '07/23/2021', 'TN2325', 'upload/beautiful-hologram-water-color-frame-png_119551.jpg'),
+(264, 12, 'karthick', 'rajasekar', 'str.karthick22@gmail.com', '9500441258', 'marriage', '12', '55', '14', '60', '09/02/2021', 'TN2345', 'upload/beautiful-hologram-water-color-frame-png_119551.jpg'),
+(265, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'marriage', '17', '66', '9', '41', '08/19/2021', 'TN2325', 'upload/beautiful-hologram-water-color-frame-png_119551.jpg'),
+(266, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'marriage', '15', '65', '11', '49', '08/19/2021', 'TN232345', 'upload/beautiful-hologram-water-color-frame-png_119551.jpg'),
+(267, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'marriage', '15', '65', '11', '49', '08/19/2021', 'TN232345', 'upload/beautiful-hologram-water-color-frame-png_119551.jpg'),
+(268, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'marriage', '15', '65', '11', '49', '08/19/2021', 'TN232345', 'upload/beautiful-hologram-water-color-frame-png_119551.jpg'),
+(269, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'marriage', '18', '43', '5', '73', '07/31/2021', 'TN2389', 'upload/beautiful-hologram-water-color-frame-png_119551.jpg'),
+(270, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'marriage', '18', '70', '5', '26', '07/30/2021', 'TN2389', 'upload/beautiful-hologram-water-color-frame-png_119551.jpg'),
+(274, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'marriage', '13', '58', '8', '38', '08/19/2021', 'TN2325', 'upload/shining-circle-purple-lighting-isolated-dark-background_1441-2396.jpg'),
+(276, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'marriage', '18', '69', '17', '67', '07/23/2021', 'TN2389', 'upload/beautiful-hologram-water-color-frame-png_119551.jpg'),
+(278, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'marriage', '2', '6', '7', '34', '07/29/2021', 'TN2323', 'upload/car travel.jpg'),
+(279, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'marriage', '5', '25', '20', '75', '08/26/2021', 'TN8776', 'upload/car travel.jpg'),
+(280, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'medical emergency', '17', '68', '3', '15', '07/31/2021', 'TN6754', 'upload/shining-circle-purple-lighting-isolated-dark-background_1441-2396.jpg'),
+(281, 15, 'power', 'rangers', 'powerrangers@gmail.com', '1234567891', 'marriage', '4', '21', '6', '29', '09/03/2021', 'TN6754', 'upload/car travel.jpg'),
+(282, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'marriage', '12', '55', '4', '21', '09/01/2021', 'TN6754', 'upload/beautiful-hologram-water-color-frame-png_119551.jpg'),
+(283, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'marriage', '19', '73', '9', '42', '09/03/2021', 'TN6754', 'upload/beautiful-hologram-water-color-frame-png_119551.jpg'),
+(284, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'marriage', '11', '47', '3', '10', '09/03/2021', 'TN6754', 'upload/car travel.jpg'),
+(285, 5, 'SHOBHI', 'karthi', 'shobhikarthick222@gmail.com', '9500441258', 'marriage', '18', '70', '17', '66', '07/30/2021', 'TN6754', 'upload/shining-circle-purple-lighting-isolated-dark-background_1441-2396.jpg');
 
 --
 -- Indexes for dumped tables
@@ -103,7 +119,7 @@ INSERT INTO `registration` (`form id`, `customer id`, `firstname`, `lastname`, `
 -- Indexes for table `registration`
 --
 ALTER TABLE `registration`
-  ADD PRIMARY KEY (`form id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -113,7 +129,7 @@ ALTER TABLE `registration`
 -- AUTO_INCREMENT for table `registration`
 --
 ALTER TABLE `registration`
-  MODIFY `form id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=262;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=286;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

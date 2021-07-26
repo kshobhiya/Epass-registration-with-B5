@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 20, 2021 at 02:32 AM
+-- Generation Time: Jul 26, 2021 at 04:21 AM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 7.3.28
 
@@ -28,15 +28,15 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `district` (
-  `District_id` int(10) NOT NULL,
-  `District` varchar(50) NOT NULL
+  `district_id` int(10) NOT NULL,
+  `district` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `district`
 --
 
-INSERT INTO `district` (`District_id`, `District`) VALUES
+INSERT INTO `district` (`district_id`, `district`) VALUES
 (1, 'Ariyalur'),
 (2, 'Chengalpattu'),
 (3, 'Chennai'),
@@ -76,7 +76,7 @@ INSERT INTO `district` (`District_id`, `District`) VALUES
 -- Indexes for table `district`
 --
 ALTER TABLE `district`
-  ADD PRIMARY KEY (`District_id`);
+  ADD PRIMARY KEY (`district_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -86,7 +86,7 @@ ALTER TABLE `district`
 -- AUTO_INCREMENT for table `district`
 --
 ALTER TABLE `district`
-  MODIFY `District_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `district_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

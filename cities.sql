@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 20, 2021 at 02:32 AM
+-- Generation Time: Jul 26, 2021 at 04:20 AM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 7.3.28
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `cities` (
   `city_id` int(10) NOT NULL,
-  `District_id` int(10) NOT NULL,
+  `district_id` int(10) NOT NULL,
   `cities` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -37,7 +37,7 @@ CREATE TABLE `cities` (
 -- Dumping data for table `cities`
 --
 
-INSERT INTO `cities` (`city_id`, `District_id`, `cities`) VALUES
+INSERT INTO `cities` (`city_id`, `district_id`, `cities`) VALUES
 (1, 1, ' Ariyalur'),
 (2, 1, 'Thirumanur'),
 (3, 1, 'Sendurai'),

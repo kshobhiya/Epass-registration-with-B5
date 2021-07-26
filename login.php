@@ -30,9 +30,9 @@
         $email = $_POST["email"];
         $password = $_POST["password"];
         if(empty($_POST["email"])){
-            $emailErr="email is required";
+            $email_err="email is required";
         }elseif(empty($_POST["password"])){
-            $passErr="password is required";
+            $password_err="password is required";
         }else{
             $sql =  "SELECT * FROM `customer` 
                     WHERE  `email`='$email'";
@@ -42,8 +42,8 @@
                     if($password === $row["password"]){
                         session_start();
                         $_SESSION["sessionId"] = $row["id"];
-                        $_SESSION["sessionfirstname"] = $row["firstname"];
-                        $_SESSION["sessionlastname"] = $row["lastname"];
+                        $_SESSION["sessionFirstName"] = $row["first_name"];
+                        $_SESSION["sessionLastName"] = $row["last_name"];
                         header("Location: index.php?success=youloggedin");
                         exit();
                     }else{
@@ -63,15 +63,15 @@
         <div class="row mb-3">
             <label for="email" class="form-label col-sm-2">Email id:</label>
             <div class="col-sm-4">
-                <input class="form-control" type="text" id="email" name="email" placeholder="enter email id" value="<?php echo $email;?>">
-                <span class="error"><?php if(isset($emailErr)) {echo $emailErr;}?></span>
+                <input class="form-control" type="text" id="email" name="email" value="<?php echo $email;?>">
+                <span class="error"><?php if(isset($email_err)) {echo $email_err;}?></span>
             </div>
         </div>
         <div class="row mb-3">
             <label for="password" class="form-label col-sm-2">Password:</label>
             <div class="col-sm-4">
-                <input class="form-control" type="password" id="password" name="password" placeholder="enter password" value="<?php echo $password;?>">
-                <span class="error"><?php if(isset($passErr)) {echo $passErr;}?></span>
+                <input class="form-control" type="password" id="password" name="password" value="<?php echo $password;?>">
+                <span class="error"><?php if(isset($password_err)) {echo $password_err;}?></span>
             </div>
         </div>
         <button class="btn btn-primary" style="margin-bottom: 30px" type="submit" name="submit" value="submit">LOGIN</button>
