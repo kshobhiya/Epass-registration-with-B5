@@ -13,17 +13,18 @@
 <?php
     session_start();
     require_once 'database.php';
-    if(isset($_SESSION["sessionId"])){
+    if(isset($_SESSION["sessionId"])){ 
         echo "<h3 class='fw-bolder'>welcome</h3>".$_SESSION["sessionFirstName"]." ".$_SESSION["sessionLastName"];
         ?><br><br>
-        <a class="link-primary" href="epassregistration.php"><b>Epass Registration Form</b></a><br><br>
-        <a href="logout.php"><button class="btn btn-danger" type="submit" name="logout" value="logout">Logout</button></a><br><br>
+        <a class="link-primary" href="epassregistration.php" style="padding-left: 10px"><b>Epass Registration Form</b></a><br><br>
+        <a href="logout.php" style="padding-left: 10px"><button class="btn btn-danger" type="submit" name="logout" value="logout">Logout</button></a><br><br>
+        <a class="link-primary" href="report.php" style="padding-left: 10px"><b>Report</b></a><br>
         <?php
         if(isset($_GET["error"])){
             echo $_GET["error"];
         }
         ?>
-        <div class="table-responsive-lg">
+        <div class="table-responsive-lg"  style="padding-top: 30px">
             <table class="table table-striped" id="epassformindex">
                 <thead>
                 <tr>

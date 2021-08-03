@@ -2,7 +2,7 @@
 <html>
 <head>
 <title></title>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="bootstrap-5.0.2-dist/css/bootstrap.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -238,13 +238,12 @@ $("#epass_form").validate({
     }
 }); 
 </script>
-
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
 $( function() {
-    $( "#date" ).datepicker({ minDate: 0, maxDate: "+6M" });
+    $( "#date" ).datepicker({ minDate: 0, maxDate: "+12M" });
 });
 </script>
 <script type="text/javascript">
