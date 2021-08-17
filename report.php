@@ -23,7 +23,7 @@
 			</div>
 		</div>
 		<div class="row mt-3 mb-3">
-			<button class="btn btn-primary col-sm-1" name="submit" value="submit">SUBMIT</button>
+			<button class="btn btn-primary col-sm-1" id="submit" name="submit" value="submit">SUBMIT</button>
 		</div>
 		</form>
 	</div>
@@ -41,7 +41,7 @@
 		if(isset($_POST["submit"]) && !empty($_POST["start_date"]) && !empty($_POST["end_date"])){
 			$start_date=$_POST["start_date"];
 			$end_date=$_POST["end_date"];
-			$sql="SELECT registration.first_name,registration.email, registration.date,cities.cities as from_city,	des_cities.cities as to_city 
+			$sql="SELECT CONCAT(registration.first_name,' ',registration.last_name)AS name,registration.email, registration.date,cities.cities as from_city,des_cities.cities as to_city 
 				FROM `registration` 
 				JOIN `cities` ON registration.from_city_id = cities.city_id 
 				JOIN `cities` as des_cities ON registration.to_city_id = des_cities.city_id
@@ -59,7 +59,7 @@
 			<?php
 			while($row=mysqli_fetch_assoc($result)){
 				echo "<tr>";
-				echo "<td>".$row["first_name"]."</td>";
+				echo "<td>".$row["name"]."</td>";
 				echo "<td>".$row["email"]."</td>";
 				echo "<td>".$row["date"]."</td>";
 				echo "<td>".$row["from_city"]."</td>";
@@ -68,7 +68,7 @@
 			}
 			
 		}else{
-			$sql="SELECT registration.first_name,registration.email, registration.date,cities.cities as from_city,des_cities.cities as to_city ,date_format(date, '%m%d%y')
+			$sql="SELECT CONCAT(registration.first_name,' ',registration.last_name)AS name,registration.email, registration.date,cities.cities as from_city,des_cities.cities as to_city ,date_format(date, '%m%d%y')
 				FROM `registration` 
 				JOIN `cities` ON registration.from_city_id = cities.city_id 
 				JOIN `cities` as des_cities ON registration.to_city_id = des_cities.city_id 
@@ -86,7 +86,7 @@
 			<?php
 			while($row=mysqli_fetch_assoc($result)){
 				echo "<tr>";
-				echo "<td>".$row["first_name"]."</td>";
+				echo "<td>".$row["name"]."</td>";
 				echo "<td>".$row["email"]."</td>";
 				echo "<td>".$row["date"]."</td>";
 				echo "<td>".$row["from_city"]."</td>";
@@ -120,10 +120,10 @@
 <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#report_table').DataTable({
+	$('#report_table').DataTable({
     	"serverside":true,
         "processing":true,
-        "paging": true,
+        "paging":true,
         "searching":true,
         "order":[],
         "columns":[
@@ -138,7 +138,7 @@ $(document).ready(function() {
         	'pdf',
         	'excel'
         ]
-    });
+	});
 });
 </script>
 </html>

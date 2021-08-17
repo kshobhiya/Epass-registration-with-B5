@@ -36,7 +36,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $to_city=$_POST["to_city"];
         $date=$_POST["date"];
         $vehicle_number=$_POST["vehicle_number"];
-        $file_name=$_FILES["file"]["name"];
+        $file_name=$_POST["url"];
         if(empty($_POST["first_name"])){
             $first_name_err="name is required";
         }elseif(!preg_match("/^[a-zA-Z\s]+$/",$first_name)){
@@ -69,25 +69,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             $vehicle_err="vehicle number is required"; 
         }elseif(!preg_match("/^[a-zA-Z\d]*$/",$vehicle_number)){
             $vehicle_err="enter a valid vehicle number";
-        }elseif(empty($_FILES["file"]["name"])){
-            $file_error="reasonable file for epass should be upload";
         }else{
-            if(isset($_FILES["file"]["name"])){
-                $file=$_FILES["file"];
-                $file_name=$_FILES["file"]["name"];
-                $tmp_name=$_FILES["file"]["tmp_name"];
-                $size=$_FILES["file"]["size"];
-                $error=$_FILES["file"]["error"];
-                $extension=explode('.',$file_name);
-                $file_extension=strtolower(end($extension));
-                $is_allowed=array('jpeg','jpg','png','pdf');
-                if(in_array($file_extension, $is_allowed)){
-                    if($error === 0){
-                        if($size < 50000){
-                            $file_destination="upload/".$file_name;
-                            move_uploaded_file($tmp_name, $file_destination);
-                            $destination=$file_destination;
-                            $sql="INSERT INTO `registration`(`customer_id`,`first_name`, `last_name`, `email`, `phone_number`, `reason`,`from_district_id`,`from_city_id`,`to_district_id`,`to_city_id`, `date`, `vehicle_number`, `reason_for_travel`) VALUES ('$id','$first_name','$last_name','$email','$phone_number','$reason','$from_district','$from_city','$to_district','$to_city','$date','$vehicle_number','$destination')";
+            $sql="INSERT INTO `registration`(`customer_id`,`first_name`, `last_name`, `email`, `phone_number`, `reason`,`from_district_id`,`from_city_id`,`to_district_id`,`to_city_id`, `date`, `vehicle_number`, `reason_for_travel`) VALUES ('$id','$first_name','$last_name','$email','$phone_number','$reason','$from_district','$from_city','$to_district','$to_city','$date','$vehicle_number','$file_name')";
                             $result=mysqli_query($conn,$sql); 
                             if($result == TRUE){
                                 $last_id=mysqli_insert_id($conn);
@@ -95,17 +78,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                             }else{
                                 echo "sql error";
                             }
-                        }else{
-                            $file_err="file size is too large!";
-                        }
-                    }else{
-                        $file_err="there is an error in uploading a file";
-                    } 
-                }else{
-                   $file_err="this type of file is not allowed to upload";
-                }
-                
-            }
+    
         }           
     }
 }

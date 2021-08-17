@@ -16,7 +16,6 @@
     </style>
 </head>
 <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="bootstrap-5.0.2-dist/js/bootstrap.js"></script>
 <nav>
     <ul class="list-inline" style="float:right">
@@ -112,7 +111,7 @@ $( "#registerform" ).validate({
             required: "Enter last name"
         },
         email: {
-            required: "Enter emaill id",
+            required: "Enter email id",
             email: "Enter valid email id"
         },
         phone_number: {

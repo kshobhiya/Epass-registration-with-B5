@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="bootstrap-5.0.2-dist/css/bootstrap.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
     <style>
@@ -19,9 +19,9 @@
     <script src="bootstrap-5.0.2-dist/js/bootstrap.js"></script>
 <h4 class="text-center" style="color: blue">EPASS REGISTRATION FORM</h4>
 <?php 
-    include "epassregistrationvalidation.php";
+    require "epassregistrationvalidation.php";
 ?>
-<div class="container" style="padding: 30px 0px 30px 0px">
+<div class="container" style="padding: 30px 0px 0px 0px">
     <form id="epass_form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"    method="POST" enctype="multipart/form-data">
     <div class="row mb-3">
         <label for="first_name" class="col-sm-2 form-label"><b>Firstname:</b></label>
@@ -130,19 +130,22 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="formFile" class="form-label col-sm-2"><b>Upload document:</b></label>
+        <label for="file" class="form-label col-sm-2"><b>Upload document:</b></label>
         <div class="col-sm-4">
-            <input class="form-control" type="file"  name="file" id="formFile" value="<?php echo $destination;?>">
-            <span class="error"><?php if(isset($file_error)){echo $file_error;}?></span>
-            <span class="error"><?php if(isset($file_err)){echo $file_err;}?></span><br>
+            <input class="form-control" type="file"  name="files[]" id="formFile" multiple><br>
+            <div class="progress">
+                <div class="progress-bar"></div>
+            </div><br>
+            <div id="upload_status"></div>
+            <input type="hidden" id="url" name="url">
         </div>
     </div>
-<p>For proof enter png file,size should not exceed 50kb</p><br>
-<button class="btn btn-primary mb-3" type="submit" name="register">REGISTER</button>
-<p style="margin-top: 5px">After registration you will receive mail for successfull registration</p><br>
-<a class="link-primary" href="index.php">HOME PAGE</a>
-</form> 
-</body>
+    <p>For proof enter pdf file and the file size should not exceed 2mb</p>
+    <button class="btn btn-primary mb-2" type="submit" name="register" value="register">REGISTER</button>
+    <p>After registration you will receive mail for successfull registration</p>
+    </form>
+</div>
+<a class="link-primary" href="index.php" style="padding-left: 20px">HOME PAGE</a>
 <script type="text/javascript">
 $("#epass_form").validate({
     rules:{
@@ -278,4 +281,64 @@ $(document).ready(function(){
     });        
 });
 </script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#formFile").change(function(){
+        var files=$("#formFile")[0].files;
+        var form_data=new FormData();
+        var filelength=this.files.length;
+        var allowedTypes=['application/pdf', 'image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
+        var error="";
+        var i;
+        for(i=0; i < filelength; i++){
+            var file=this.files[i];
+            var fileType=file.type;
+            var filesize=file.size;
+            if(!((fileType==allowedTypes[0]) || (fileType==allowedTypes[1])||(fileType==allowedTypes[2])||(fileType==allowedTypes[3])||(fileType==allowedTypes[4]))){
+                alert("please select the valid file pdf/jpeg/png/jpg/gif");
+                $("#formFile").val('');
+                return false;
+            }else if(filesize > 2000000){
+                alert("please select the file size less than 2kb");
+                $("#formFile").val('');
+                return false;
+            }
+            if(error== ""){
+                form_data.append("files[]",files[i]);
+                $.ajax({
+                    xhr:function(){
+                        var xhr=new window.XMLHttpRequest();
+                        xhr.upload.addEventListener("progress",function(evt){
+                            if(evt.lengthComputable){
+                                var percentComplete=((evt.loaded/evt.total)*100);
+                                $(".progress-bar").width(percentComplete+'%');
+                                $(".progress-bar").html(percentComplete+'%');
+                            }
+                        },false);
+                        return xhr;
+                    },
+                    type:"POST",
+                    url:"upload.php",
+                    data:form_data,
+                    contentType:false,
+                    cache:false,
+                    processData:false,
+                    beforeSend:function(){
+                        $(".progress-bar").width('0%');
+                        $("#upload_status").html("<P>File uploading</p>");
+                    },
+                    error:function(){
+                        $("#upload_status").html("<p>File upload failure,please try again</p>");    
+                    },
+                    success:function(data){
+                        $("#upload_status").html("<p>File uploaded successfully</p>");
+                        document.getElementById("url").value=data;
+                    }
+                });
+            }
+        }
+    });
+});
+</script>
+</body>
 </html>
